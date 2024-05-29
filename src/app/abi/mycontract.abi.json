@@ -1,0 +1,592 @@
+[
+  {
+    "type": "impl",
+    "name": "HelloStarknetImpl",
+    "interface_name": "test2::IHelloStarknet"
+  },
+  {
+    "type": "struct",
+    "name": "test2::ekubo::interfaces::erc20::IERC20Dispatcher",
+    "members": [
+      {
+        "name": "contract_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "core::integer::u256",
+    "members": [
+      {
+        "name": "low",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "high",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "test2::IHelloStarknet",
+    "items": [
+      {
+        "type": "function",
+        "name": "register_user",
+        "inputs": [
+          {
+            "name": "token_to_use",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token_to_repay",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "deposit_token",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "withdraw_token",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "borrow_token",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "change_token_to_use",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "change_token_to_repay",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "total_money_deposited",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "total_money_available_to_borrow",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "total_money_borrowed",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "try_to_liq_user",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::bool"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "try_to_liq_everyone",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "liquidate",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token_from",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token_to",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u128"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "update_all_token_price",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "supply_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "borrow_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "get_asset_price",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "is_supported_token",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::bool"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "does_user_exist",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::bool"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "get_user_points",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_get_total_points",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "increase_user_points",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "points",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "set_user_points_to_0",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "admin_create_new_points_campaign",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "register_for_the_current_campaign",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "admin_blacklist_user_campaign",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "admin_finish_point_campaign",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "admin_dissalow_new_futur_points_campaign",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_deposited_amount",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_borrowed_amount",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_total_deposited_amount",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_total_borrowed_amount",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_utilisation_rate",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_utilisation_rate_after_deposit",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_utilisation_rate_after_borrow",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_utilisation_rate_after_repay",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "constructor",
+    "name": "constructor",
+    "inputs": []
+  },
+  {
+    "type": "event",
+    "name": "test2::HelloStarknet::Event",
+    "kind": "enum",
+    "variants": []
+  }
+]
