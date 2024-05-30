@@ -41,7 +41,7 @@ function App() {
     address: contractAddress,
     abi: MyAbi,
     functionName: "frontend_get_user_points",
-    args: [contractAddress],
+    args: [userAddress],
     watch: true,
   });
   const points = points_loading ? "Loading..." : Number(points_data);

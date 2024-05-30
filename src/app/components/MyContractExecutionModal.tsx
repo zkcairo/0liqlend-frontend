@@ -149,7 +149,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
     address: contractAddress,
     abi: MyAbi,
     functionName: "frontend_utilisation_rate_after_borrow",
-    args: [contractAddress, tokenAddress, inputAmount],
+    args: [userAddress, tokenAddress, inputAmount],
     watch: true,
   });
   const utilizationRatioAfterBorrow = utilizationRatioAfterBorrow_loading ? "Loading..." : Number(utilizationRatioAfterBorrow_data).toFixed(2) + "%";
@@ -158,7 +158,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
     address: contractAddress,
     abi: MyAbi,
     functionName: "frontend_utilisation_rate_after_repay",
-    args: [contractAddress, tokenAddress, inputAmount],
+    args: [userAddress, tokenAddress, inputAmount],
     watch: true,
   });
   const utilizationRatioAfterRepay = utilizationRatioAfterRepay_loading ? "Loading..." : Number(utilizationRatioAfterRepay_data).toFixed(2) + "%";

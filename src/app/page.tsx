@@ -15,7 +15,7 @@ export default function Home() {
     address: contractAddress,
     abi: MyAbi,
     functionName: "frontend_get_number_of_users",
-    args: [contractAddress],
+    args: [],
     watch: true,
   });
   const users = users_loading ? "Loading..." : Number(users_data);
@@ -24,7 +24,7 @@ export default function Home() {
     address: contractAddress,
     abi: MyAbi,
     functionName: "frontend_get_TLV",
-    args: [contractAddress],
+    args: [],
     watch: true,
   });
   const tlv = tlv_loading ? "Loading..." : Number(tlv_data);
