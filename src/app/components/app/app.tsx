@@ -178,7 +178,7 @@ function App() {
     args: [USDC_SEPOLIA],
     watch: true,
   });
-  const assetPriceUsdc = assetPriceUsdc_loading ? "Loading..." : Number(Number(assetPriceUsdc_data) / 10**6).toFixed(2) + "$";
+  const assetPriceUsdc = assetPriceUsdc_loading ? "Loading..." : Number(Number(assetPriceUsdc_data) / 10**20).toFixed(2) + "$";
 
 
 

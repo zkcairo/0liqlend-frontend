@@ -27,7 +27,7 @@ export default function Home() {
     args: [],
     watch: true,
   });
-  const tlv = tlv_loading ? "Loading..." : Number(tlv_data);
+  const tlv = tlv_loading ? "Loading..." : Number(Number(tlv_data) / 10**26).toFixed(0);
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-24 md:p-24">

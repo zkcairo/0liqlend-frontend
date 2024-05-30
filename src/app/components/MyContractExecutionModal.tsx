@@ -82,9 +82,13 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const userAddress = account.address;
   const tokenAddress = tokenUsed === "Eth" ? ETH_SEPOLIA : (tokenUsed === "Strk" ? STRK_SEPOLIA : USDC_SEPOLIA);
 
-  const decimalsTokenPragma = tokenUsed === "Usdc" ? 6 : 8; // 8 for all? https://docs.pragma.build/Resources/Cairo%201/data-feeds/supported-assets
+  const decimalsTokenPragma = tokenUsed === "Usdc" ? 20 : 8;
   const decimalsTokenContract = tokenUsed === "Eth" ? 10**18 : (tokenUsed === "Strk" ? 10**18 : 10**6);
   const inputAmount = String(Number(callData) * decimalsTokenContract);
+
+  // 1 usdc qui est value / 10**8 $
+  // Mais dans le code on a 10**dec usd
+  // Donc faut faire tokens / 10**dec * value / 10**8
   console.log(inputAmount);
 
   const { data: assetPrice_data, isLoading: assetPrice_loading } = useContractRead({
