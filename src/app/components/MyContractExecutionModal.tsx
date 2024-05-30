@@ -207,7 +207,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const setCallDataValue = (value: string) => {
     setCallData(value);
 
-    if (isValidStringArrayString(value)) {
+    if (true) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         callData: false,

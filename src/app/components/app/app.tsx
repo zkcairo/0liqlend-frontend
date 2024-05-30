@@ -215,6 +215,8 @@ function App() {
 
         <p>Using this app comes at risk.
           By using the app you acknowledge <a href="https://github.com/zkcairo/0liqlend-contract/blob/main/readme.md" target="_blank"><u>these warnings</u></a>.
+          <br></br>
+          Current max utilization ratio = 10%
         </p>
         
         <div className="mb-4 flex flex-col mt-12">
