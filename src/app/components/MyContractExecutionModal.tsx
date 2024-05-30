@@ -25,7 +25,7 @@ type Props = {
   tokenUsed: string;
 };
 
-function scaleapy(n: Number) {
+function scaleapy(n: number) {
   const scale = 10000;
   return 100 - 100*Math.pow(((scale - n) / scale), 87600);
 }
