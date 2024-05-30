@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend of 0liqlend
 
-## Getting Started
+Using scaffold
 
-First, run the development server:
+Is a nextjs app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Using react
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Deployed on vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Risks of using the app:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The code is not audited. It could have bugs that could result in total loss of funds.
 
-## Learn More
+The code is not tested. It could have bugs that could result in total loss of funds.
 
-To learn more about Next.js, take a look at the following resources:
+Starknet and cairo are experimental technology. It could have bugs that could result in total loss of funds.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app is new, so as every lending app if there aren't enough liquidity it could result in your funds being stucked in the platform.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The app relies solely on ekubo. If ekubo has a bug or no liquidity, it could result in your funds being stucked in the platform.
 
-## Deploy on Vercel
+The app currently do not check the price given by ekubo. If the swap made through ekubo has a catastrophic price it could result in loss on your side that I am not responssible for (todo will fix that issue soon)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+I reserve the right to modify your number of points at anytime.
+Maybe there won't be an airdrop.
+Points do not entitle you to a potential airdrop.
+I reverse the right to ban you from the points program at anytime.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I am not liable of any loss of funds you may incur when using my app.
+By interacting with the app you confirm that you won't sue me for loss of funds or anything else related to my app.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+# Disclaimer of Warranty
+
+The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
+
+# Limitation of Liability
+
+In no event shall the authors or copyright holders be liable for any special, incidental, indirect, or consequential damages whatsoever (including, without limitation, damages for loss of business profits, business interruption, loss of business information, or any other pecuniary loss) arising out of the use of or inability to use this software, even if the authors or copyright holders have been advised of the possibility of such damages.
