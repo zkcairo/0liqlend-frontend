@@ -31,6 +31,11 @@ interface FileList {
   webkitRelativePath: string;
 }
 
+function scaleapy(n: Number) {
+  const scale = 10000;
+  return 100 - 100*Math.pow(((scale - n) / scale), 87600);
+}
+
 function App() {
 
   const { account, status, isConnected } = useAccount();
@@ -44,56 +49,56 @@ function App() {
   const { data: lendApyRateEth_data, isLoading: lendApyRateEth_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_supply_apy",
+    functionName: "supply_apy",
     args: [ETH_SEPOLIA],
     watch: true,
   });
-  const lendApyRateEth = lendApyRateEth_loading ? "Loading..." : Number(lendApyRateEth_data).toFixed(2) + "%";
+  const lendApyRateEth = lendApyRateEth_loading ? "Loading..." : scaleapy(Number(lendApyRateEth_data)).toFixed(2) + "%";
 
   const { data: lendApyRateStrk_data, isLoading: lendApyRateStrk_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_supply_apy",
+    functionName: "supply_apy",
     args: [STRK_SEPOLIA],
     watch: true,
   });
-  const lendApyRateStrk = lendApyRateStrk_loading ? "Loading..." : Number(lendApyRateStrk_data).toFixed(2) + "%";
+  const lendApyRateStrk = lendApyRateStrk_loading ? "Loading..." : scaleapy(Number(lendApyRateStrk_data)).toFixed(2) + "%";
 
   const { data: lendApyRateUsdc_data, isLoading: lendApyRateUsdc_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_supply_apy",
+    functionName: "supply_apy",
     args: [USDC_SEPOLIA],
     watch: true,
   });
-  const lendApyRateUsdc = lendApyRateUsdc_loading ? "Loading..." : Number(lendApyRateUsdc_data).toFixed(2) + "%";
+  const lendApyRateUsdc = lendApyRateUsdc_loading ? "Loading..." : scaleapy(Number(lendApyRateUsdc_data)).toFixed(2) + "%";
 
   const { data: borrowApyRateEth_data, isLoading: borrowApyRateEth_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_borrow_apy",
+    functionName: "borrow_apy",
     args: [ETH_SEPOLIA],
     watch: true,
   });
-  const borrowApyRateEth = borrowApyRateEth_loading ? "Loading..." : Number(borrowApyRateEth_data).toFixed(2) + "%";
+  const borrowApyRateEth = borrowApyRateEth_loading ? "Loading..." : scaleapy(Number(borrowApyRateEth_data)).toFixed(2) + "%";
 
   const { data: borrowApyRateStrk_data, isLoading: borrowApyRateStrk_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_borrow_apy",
+    functionName: "borrow_apy",
     args: [STRK_SEPOLIA],
     watch: true,
   });
-  const borrowApyRateStrk = borrowApyRateStrk_loading ? "Loading..." : Number(borrowApyRateStrk_data).toFixed(2) + "%";
+  const borrowApyRateStrk = borrowApyRateStrk_loading ? "Loading..." : scaleapy(Number(borrowApyRateStrk_data)).toFixed(2) + "%";
 
   const { data: borrowApyRateUsdc_data, isLoading: borrowApyRateUsdc_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_borrow_apy",
+    functionName: "borrow_apy",
     args: [USDC_SEPOLIA],
     watch: true,
   });
-  const borrowApyRateUsdc = borrowApyRateUsdc_loading ? "Loading..." : Number(borrowApyRateUsdc_data).toFixed(2) + "%";
+  const borrowApyRateUsdc = borrowApyRateUsdc_loading ? "Loading..." : scaleapy(Number(borrowApyRateUsdc_data)).toFixed(2) + "%";
 
   const { data: totalDepositedAmoundEth_data, isLoading: totalDepositedAmoundEth_loading } = useContractRead({
     address: contractAddress,
@@ -151,7 +156,7 @@ function App() {
   const { data: assetPriceEth_data, isLoading: assetPriceEth_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "get_asset_price",
+    functionName: "frontend_get_asset_price",
     args: [ETH_SEPOLIA],
     watch: true,
   });
@@ -160,7 +165,7 @@ function App() {
   const { data: assetPriceStrk_data, isLoading: assetPriceStrk_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "get_asset_price",
+    functionName: "frontend_get_asset_price",
     args: [STRK_SEPOLIA],
     watch: true,
   });
@@ -169,11 +174,11 @@ function App() {
   const { data: assetPriceUsdc_data, isLoading: assetPriceUsdc_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "get_asset_price",
+    functionName: "frontend_get_asset_price",
     args: [USDC_SEPOLIA],
     watch: true,
   });
-  const assetPriceUsdc = assetPriceUsdc_loading ? "Loading..." : Number(Number(assetPriceUsdc_data) / 10**8).toFixed(2) + "$";
+  const assetPriceUsdc = assetPriceUsdc_loading ? "Loading..." : Number(Number(assetPriceUsdc_data) / 10**6).toFixed(2) + "$";
 
 
 

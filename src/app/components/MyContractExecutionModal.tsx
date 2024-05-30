@@ -8,7 +8,7 @@ import rightArr from "../../../public/assets/right-arr.svg";
 import toast from "react-hot-toast";
 import Erc20Abi from "../abi/token.abi.json";
 import MyAbi from "../abi/mycontract.abi.json";
-import { ETH_SEPOLIA, STRK_SEPOLIA } from "@/app/utils/constant";
+import { ETH_SEPOLIA, STRK_SEPOLIA, USDC_SEPOLIA } from "@/app/utils/constant";
 import { formatCurrency } from "@/app/utils/currency";
 import { useContractRead } from "@starknet-react/core";
 
@@ -25,6 +25,10 @@ type Props = {
   tokenUsed: string;
 };
 
+function scaleapy(n: Number) {
+  const scale = 10000;
+  return 100 - 100*Math.pow(((scale - n) / scale), 87600);
+}
 
 function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props) {
 
@@ -52,7 +56,15 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
     address: STRK_SEPOLIA,
     abi: Erc20Abi,
     functionName: "balanceOf",
-    args: [account.address!],
+    args: [account.address],
+    watch: true,
+  });
+
+  const { data: usdc, isLoading: usdcLoading } = useContractRead({
+    address: USDC_SEPOLIA,
+    abi: Erc20Abi,
+    functionName: "balanceOf",
+    args: [account.address],
     watch: true,
   });
 
@@ -60,15 +72,17 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const ethBalance = formatCurrency(eth?.balance.low.toString());
   // @ts-ignore
   const strkBalance = formatCurrency(strk?.balance?.low.toString());
+  // @ts-ignore
+  const usdcBalance = formatCurrency(usdc?.balance?.low.toString());
 
-  const tokenBalance_data = tokenUsed === "Eth" ? ethBalance : strkBalance;
-  const tokenBalance_loading = tokenUsed === "Eth" ? ethLoading : strkLoading;
+  const tokenBalance_data = tokenUsed === "Eth" ? ethBalance : tokenUsed === "Strk" ? strkBalance : usdcBalance;
+  const tokenBalance_loading = tokenUsed === "Eth" ? ethLoading : tokenUsed === "Strk" ? strkLoading : usdcLoading;
   const tokenBalance = tokenBalance_loading ? "Loading..." : tokenBalance_data;
 
   const userAddress = account.address;
-  const tokenAddress = tokenUsed === "Eth" ? ETH_SEPOLIA : STRK_SEPOLIA;
+  const tokenAddress = tokenUsed === "Eth" ? ETH_SEPOLIA : (tokenUsed === "Strk" ? STRK_SEPOLIA : USDC_SEPOLIA);
 
-  const decimalsTokenPragma = 8; // 8 for all? https://docs.pragma.build/Resources/Cairo%201/data-feeds/supported-assets
+  const decimalsTokenPragma = tokenUsed === "Usdc" ? 6 : 8; // 8 for all? https://docs.pragma.build/Resources/Cairo%201/data-feeds/supported-assets
   const decimalsTokenContract = tokenUsed === "Eth" ? 10**18 : (tokenUsed === "Strk" ? 10**18 : 10**6);
   const inputAmount = String(Number(callData) * decimalsTokenContract);
   console.log(inputAmount);
@@ -76,7 +90,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const { data: assetPrice_data, isLoading: assetPrice_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "get_asset_price",
+    functionName: "frontend_get_asset_price",
     args: [tokenAddress],
     watch: true,
   });
@@ -85,20 +99,20 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const { data: lendApyRate_data, isLoading: lendApyRate_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_supply_apy",
+    functionName: "supply_apy",
     args: [tokenAddress],
     watch: true,
   });
-  const lendApyRate = lendApyRate_loading ? "Loading..." : Number(lendApyRate_data).toFixed(2) + "%";
+  const lendApyRate = lendApyRate_loading ? "Loading..." : scaleapy(Number(lendApyRate_data)).toFixed(2) + "%";
 
   const { data: borrowApyRate_data, isLoading: borrowApyRate_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_borrow_apy",
+    functionName: "borrow_apy",
     args: [tokenAddress],
     watch: true,
   });
-  const borrowApyRate = borrowApyRate_loading ? "Loading..." : Number(borrowApyRate_data).toFixed(2) + "%";
+  const borrowApyRate = borrowApyRate_loading ? "Loading..." : scaleapy(Number(borrowApyRate_data)).toFixed(2) + "%";
 
   const { data: depositedAmound_data, isLoading: depositedAmound_loading } = useContractRead({
     address: contractAddress,
@@ -338,7 +352,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
           <div className="flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-2">
               <h2>Asset price: {assetPrice}$</h2>
-              <h2>Your input amount price: {Number(Number(inputAmount)*Number(assetPrice)).toFixed(2)}$</h2>
+              <h2>Your input amount price: {Number(Number(callData)*Number(assetPrice)).toFixed(2)}$</h2>
               <br></br>--<br></br>
               <h2>Amount you already deposited in the protocol: {Number(depositedAmound).toFixed(3)}{tokenUsed}</h2>
               <h2>Max you can deposit (amount in your wallet): {Number(tokenBalance).toFixed(3)}{tokenUsed}</h2>
@@ -357,7 +371,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
           <div className="flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-2">
               <h2>Asset price: {assetPrice}$</h2>
-              <h2>Your input amount price: {Number(Number(inputAmount)*Number(assetPrice)).toFixed(2)}$</h2>
+              <h2>Your input amount price: {Number(Number(callData)*Number(assetPrice)).toFixed(2)}$</h2>
               <br></br>--<br></br>
               <h2>Amount you already deposited in the protocol: {Number(depositedAmound).toFixed(3)}{tokenUsed}</h2>
               <h2>Max you can withdraw (according to your deposited assets): todo</h2>
@@ -375,7 +389,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
           <div className="flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-2">
               <h2>Asset price: {assetPrice}$</h2>
-              <h2>Your input amount price: {Number(Number(inputAmount)*Number(assetPrice)).toFixed(2)}$</h2>
+              <h2>Your input amount price: {Number(Number(callData)*Number(assetPrice)).toFixed(2)}$</h2>
               <br></br>--<br></br>
               <h2>Amount you already borrowed from the protocol: {Number(borrowedAmound).toFixed(3)}{tokenUsed}</h2>
               <h2>Max to borrow in the pool: {Number(totalDepositedAmound).toFixed(3)}{tokenUsed}</h2>
@@ -395,7 +409,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
           <div className="flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-2">
               <h2>Asset price: {assetPrice}$</h2>
-              <h2>Your input amount price: {Number(Number(inputAmount)*Number(assetPrice)).toFixed(2)}$</h2>
+              <h2>Your input amount price: {Number(Number(callData)*Number(assetPrice)).toFixed(2)}$</h2>
               <br></br>--<br></br>
               <h2>Currrent amount borrowed: {Number(borrowedAmound).toFixed(3)}{tokenUsed}</h2>
               <h2>Amount in your wallet: {Number(tokenBalance).toFixed(3)}{tokenUsed}</h2>
