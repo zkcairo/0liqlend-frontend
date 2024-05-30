@@ -8,6 +8,7 @@ const Bottom = () => {
     <button>Twitter (soon)</button>
     <button>Docs (soon)</button>
     <button>Faq (soon)</button>
+    <button><a href="https://github.com/zkcairo" target="_blank">Github</a></button>
   </div>
   );
 };

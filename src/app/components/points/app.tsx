@@ -34,7 +34,7 @@ function App() {
 
   const { account, status, isConnected } = useAccount();
 
-  const contractAddress = "0x04793071612a3ede8a03288b028fc73b7ff4d8a399defeead8f45ddae8a37cb4";
+  const contractAddress = "0x0347def0979f4e07685a5021c8918bdd8a53e5e3425c84605ac32aef592f8060";
   const userAddress = String(account?.address);
 
   const { data: points_data, isLoading: points_loading } = useContractRead({
@@ -63,8 +63,8 @@ function App() {
   return (
     <div className="flex flex-col dark:text-white text-black">
       <Header />
-      <div className="flex items-center flex-col p-4 pt-20">
-        <h1 className="text-6xl font-bold">Points program</h1>
+      <div className="flex items-center flex-col p-4 pt-20 mt-80">
+        <h1 className="text-6xl font-bold">Points</h1>
         <form className="flex flex-col mt-12" onSubmit={handleFormSubmit}>
           <div className="mb-4">
             <div className="flex flex-col gap-y-3">

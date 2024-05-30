@@ -142,64 +142,11 @@ const Header = () => {
         </div>
 
         <div className="flex items-center md:hidden gap-8">
-          <ThemeSwitch
-            className="flex md:hidden dark:transform-none transform dark:translate-none transition-all duration-500 ease-in-out"
-            action={changeTheme}
-            theme={theme}
-            openMenu={openMenu}
-          />
-
-          <button
-            title="toggle menu"
-            onClick={toggleMenu}
-            className="flex flex-col gap-2 md:hidden"
-          >
-            <div
-              className={`w-[1.5em] h-[2px] ${
-                theme === "dark" ? "bg-[#ffffff]" : "bg-[#000000]"
-              } rounded-full transition-all duration-300 ease-in-out ${
-                openMenu
-                  ? "rotate-45 translate-y-[0.625em]"
-                  : "rotate-0 translate-y-0"
-              }`}
-            ></div>
-            <div
-              className={`w-[1.5em] h-[2px] ${
-                theme === "dark" ? "bg-[#ffffff]" : "bg-[#000000]"
-              } rounded-full transition-all duration-300 ease-in-out ${
-                openMenu ? "opacity-0" : "opacity-100"
-              }`}
-            ></div>
-            <div
-              className={`w-[1.5em] h-[2px] ${
-                theme === "dark" ? "bg-[#ffffff]" : "bg-[#000000]"
-              } rounded-full transition-all duration-300 ease-in-out ${
-                openMenu
-                  ? "-rotate-45 translate-y-[-0.625em]"
-                  : "rotate-0 translate-y-0"
-              }`}
-            ></div>
-          </button>
-        </div>
-
-        <div
-          className={`w-screen  transition-all duration-300 ease-in-out grid ${
-            openMenu
-              ? "min-h-[4rem] grid-rows-[1fr]  opacity-100"
-              : "grid-rows-[0fr]  opacity-0"
-          }  md:hidden`}
-        >
           <div className="overflow-hidden">
             <div className="flex flex-wrap gap-8">
               {address ? (
                 <div className="flex justify-end">
                   <AddressBar setOpenConnectedModal={setOpenConnectedModal} />
-                  <button
-                    className="mx-3 text-base font-bold py-2 px-4 rounded-full transition duration-300"
-                    onClick={handleOpenTransactionListClick}
-                  >
-                    <LibraryBig className="h-full w-full" />
-                  </button>
                 </div>
               ) : (
                 <button
@@ -209,10 +156,8 @@ const Header = () => {
                   Connect
                 </button>
               )}
-
-              <NetworkSwitcher />
-            </div>
           </div>
+        </div>
         </div>
       </header>
 

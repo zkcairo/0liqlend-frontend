@@ -39,7 +39,7 @@ function App() {
   const decimalsTokenContractStrk = 10**18;
   const decimalsTokenContractUsdc = 10**6;
 
-  const contractAddress = "0x04793071612a3ede8a03288b028fc73b7ff4d8a399defeead8f45ddae8a37cb4";
+  const contractAddress = "0x0347def0979f4e07685a5021c8918bdd8a53e5e3425c84605ac32aef592f8060";
   const userAddress = String(account?.address);
   const { data: lendApyRateEth_data, isLoading: lendApyRateEth_loading } = useContractRead({
     address: contractAddress,
@@ -207,6 +207,10 @@ function App() {
       <Header />
       <div className="flex items-center text-center flex-col">
         <h1 className="text-6xl font-bold mt-80 md:mt-16">Lending market:</h1>
+
+        <p>Using this app comes at risk.
+          By using the app you acknowledge <a href="https://github.com/zkcairo/0liqlend-contract/blob/main/readme.md" target="_blank"><u>these warnings</u></a>.
+        </p>
         
         <div className="mb-4 flex flex-col mt-12">
           <div className="mb-16 text-center gap-y-3">

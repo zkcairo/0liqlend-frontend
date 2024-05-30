@@ -38,7 +38,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const contractAddress = "0x04793071612a3ede8a03288b028fc73b7ff4d8a399defeead8f45ddae8a37cb4";
+  const contractAddress = "0x0347def0979f4e07685a5021c8918bdd8a53e5e3425c84605ac32aef592f8060";
 
   const { data: eth, isLoading: ethLoading } = useContractRead({
     address: ETH_SEPOLIA,
@@ -226,11 +226,21 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
 
       const tocall = [tokenAddress, inputAmount, "0"];
 
-      const call: Call = {
+      let call = [{
         contractAddress: contractAddress,
         calldata: tocall,
         entrypoint: functionName,
-      };
+      }];
+      // If deposit, add an approve to it
+      if (activeTab === "deposit") {
+        call = [
+          {
+            contractAddress: tokenAddress,
+            calldata: [contractAddress, inputAmount, "0"],
+            entrypoint: "approve"
+          },
+          call[0]];
+      }
       console.log("call", call);
 
       // Ensure callData is formatted as expected
