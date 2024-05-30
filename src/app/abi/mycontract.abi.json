@@ -2,11 +2,11 @@
   {
     "type": "impl",
     "name": "HelloStarknetImpl",
-    "interface_name": "test2::IHelloStarknet"
+    "interface_name": "ddd::IHelloStarknet"
   },
   {
     "type": "struct",
-    "name": "test2::ekubo::interfaces::erc20::IERC20Dispatcher",
+    "name": "ekubo::interfaces::erc20::IERC20Dispatcher",
     "members": [
       {
         "name": "contract_address",
@@ -44,7 +44,7 @@
   },
   {
     "type": "interface",
-    "name": "test2::IHelloStarknet",
+    "name": "ddd::IHelloStarknet",
     "items": [
       {
         "type": "function",
@@ -59,6 +59,13 @@
             "type": "core::starknet::contract_address::ContractAddress"
           }
         ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "register_user_if_needed",
+        "inputs": [],
         "outputs": [],
         "state_mutability": "external"
       },
@@ -97,6 +104,22 @@
       {
         "type": "function",
         "name": "borrow_token",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "amount",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "repay_token",
         "inputs": [
           {
             "name": "token",
@@ -184,6 +207,61 @@
       },
       {
         "type": "function",
+        "name": "supply_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "borrow_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "update_every_user_position",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "update_user_position",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "n",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
         "name": "try_to_liq_user",
         "inputs": [
           {
@@ -200,7 +278,23 @@
       },
       {
         "type": "function",
-        "name": "try_to_liq_everyone",
+        "name": "do_we_liq",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::bool"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "try_to_liquidate_everyone",
         "inputs": [],
         "outputs": [],
         "state_mutability": "external"
@@ -238,39 +332,7 @@
       },
       {
         "type": "function",
-        "name": "supply_apy",
-        "inputs": [
-          {
-            "name": "token",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "type": "function",
-        "name": "borrow_apy",
-        "inputs": [
-          {
-            "name": "token",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::integer::u256"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "type": "function",
-        "name": "get_asset_price",
+        "name": "frontend_get_asset_price",
         "inputs": [
           {
             "name": "token",
@@ -302,23 +364,14 @@
       },
       {
         "type": "function",
-        "name": "does_user_exist",
-        "inputs": [
-          {
-            "name": "user",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "core::bool"
-          }
-        ],
-        "state_mutability": "view"
+        "name": "hook",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
       },
       {
         "type": "function",
-        "name": "get_user_points",
+        "name": "frontend_get_user_points",
         "inputs": [
           {
             "name": "user",
@@ -414,6 +467,28 @@
         "name": "admin_dissalow_new_futur_points_campaign",
         "inputs": [],
         "outputs": [],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_get_number_of_users",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_get_TLV",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
         "state_mutability": "view"
       },
       {
@@ -575,6 +650,50 @@
           }
         ],
         "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_supply_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "frontend_borrow_apy",
+        "inputs": [
+          {
+            "name": "token",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "upgrade",
+        "inputs": [
+          {
+            "name": "new_class_hash",
+            "type": "core::starknet::class_hash::ClassHash"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
       }
     ]
   },
@@ -585,7 +704,7 @@
   },
   {
     "type": "event",
-    "name": "test2::HelloStarknet::Event",
+    "name": "ddd::HelloStarknet::Event",
     "kind": "enum",
     "variants": []
   }
