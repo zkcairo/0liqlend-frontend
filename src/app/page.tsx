@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Bottom from "./components/Bottom";
 import MyAbi from "./abi/mycontract.abi.json";
 import { useContractRead } from "@starknet-react/core";
+import HeaderNoConnect from "./components/HeaderNoConnect";
 
 
 
@@ -31,8 +32,8 @@ export default function Home() {
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-24 md:p-24">
-      <Header />
-        <h1 className="text-6xl font-bold mt-20">0LiqLend</h1>
+      <HeaderNoConnect />
+        <h1 className="text-6xl font-bold mt-15">0LiqLend</h1>
         <center className="mt-5"><p className="text-2xl">
           A lending app on Starknet where every interaction with the platform automatically
           liquidate every eligible position to limit bad debts/liq penalties.
@@ -48,7 +49,10 @@ export default function Home() {
           <button><a href="/app">Open the app</a></button>
         </div>
         <div className="mb-50 text-center">
+          <button><a href="/how-it-works">How does it work?</a></button>
           <button><a href="/points">Points program</a></button>
+        </div>
+        <div className="mb-50 text-center mt-10">
           <button><a href="http://twitter.com/zkcairo" target="_blank">Follow me on twitter</a></button>
         </div>
         <Bottom />

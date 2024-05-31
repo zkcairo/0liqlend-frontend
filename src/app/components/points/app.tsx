@@ -20,6 +20,7 @@ import { ETH_SEPOLIA, STRK_SEPOLIA } from "@/app/utils/constant";
 import { formatCurrency } from "@/app/utils/currency";
 import { useContractRead } from "@starknet-react/core";
 import Bottom from "../Bottom";
+import HeaderNoConnect from "../HeaderNoConnect";
 
 interface FileList {
   lastModified: number;
@@ -63,16 +64,16 @@ function App() {
   return (
     <div className="flex flex-col dark:text-white text-black">
       <Header />
-      <div className="flex items-center flex-col p-4 pt-20 mt-80">
+      <div className="flex items-center flex-col p-4 pt-20 mt-[400px] md:mt-10">
         <h1 className="text-6xl font-bold">Points</h1>
         <form className="flex flex-col mt-12" onSubmit={handleFormSubmit}>
           <div className="mb-4">
             <div className="flex flex-col gap-y-3">
                 <div className="flex items-center gap-x-2">
-                  <h4 className="text-base font-medium">Your points: {points}</h4>
+                  <h4 className="text-base font-medium">Your points: {Number(Number(points) / 10**24).toFixed(0)}</h4>
                 </div>
                 <div className="flex items-center gap-x-2">
-                  <h4 className="text-base font-medium">Total number of points: {totalpoints}</h4>
+                  <h4 className="text-base font-medium">Total number of points: {Number(Number(totalpoints) / 10**24).toFixed(0)}</h4>
                 </div>
                 <div className="flex items-center gap-x-2">
                 </div>
