@@ -431,8 +431,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
         )}
 
         <button
-          className="w-full mt-7 py-3 rounded font-medium flex items-center gap-x-2 justify-center disabled:cursor-not-allowed"
-          disabled={ false }
+          className="w-full mt-7 py-3 rounded font-medium flex items-center gap-x-2 justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
+            disabled={isNaN(Number(callData)) || Number(callData) <= 0}
           onClick={async (e) => {
             e.preventDefault();
             await handleExecute();

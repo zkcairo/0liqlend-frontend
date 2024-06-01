@@ -1,34 +1,6 @@
 "use client";
-import cloudUploadIcon from "../../../../public/assets/cloudUploadIcon.svg";
-import fileIcon from "../../../../public/assets/fileIcon.svg";
-import trash from "../../../../public/assets/deleteIcon.svg";
-import { useRef, useState } from "react";
 import HeaderNoConnect from "../HeaderNoConnect";
-import { DeclareContractPayload, hash, CallData, UniversalDeployerContractPayload, CompiledSierraCasm } from "starknet";
-import { useAccount } from "@starknet-react/core";
-import MyContractExecutionModal from "../MyContractExecutionModal";
-import { createPortal } from "react-dom";
-import { isSetIterator } from "util/types";
-import { MdToken } from "react-icons/md";
-import Image from "next/image";
-import { Call } from "starknet";
-import spinner from "../../../public/assets/spinner.svg";
-import rightArr from "../../../public/assets/right-arr.svg";
-import toast from "react-hot-toast";
-import MyAbi from "../../abi/mycontract.abi.json";
-import { ETH_SEPOLIA, STRK_SEPOLIA } from "@/app/utils/constant";
-import { formatCurrency } from "@/app/utils/currency";
-import { useContractRead } from "@starknet-react/core";
 import Bottom from "../Bottom";
-
-interface FileList {
-  lastModified: number;
-  lastModifiedDate: Date;
-  name: string;
-  size: number;
-  type: string;
-  webkitRelativePath: string;
-}
 
 function App() {
 

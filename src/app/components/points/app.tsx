@@ -93,6 +93,11 @@ function App() {
                     If you sybil I will manually upgrade the contract to ban you.
                   </h4>
                 </div>
+                <div className="flex items-center gap-x-2">
+                  <h4 className="text-base font-medium">
+                    <a href="https://github.com/zkcairo/0liqlend-contract/blob/main/readme.md" target="_blank"><u>Disclaimer about the point programs</u></a>.
+                  </h4>
+                </div>
             </div>
           </div>
         </form>
