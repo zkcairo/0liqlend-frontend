@@ -86,13 +86,14 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     watch: true,
   });
 
-  const offers_ = (activeTab === "lend offers") ? lending_offers : 
+  const offers_ = ((activeTab === "lend offers") ? lending_offers : 
                 (activeTab === "borrow offers") ? borrowing_offers : 
-                (activeTab === "current loans") ? matching_offers : collaterals;
+                (activeTab === "current loans") ? matching_offers : collaterals);
+  console.log(offers_);
   const loading_offers = (activeTab === "lend offers") ? lending_offer_loading :
                   (activeTab === "borrow offers") ? borrowing_offer_loading :
                   (activeTab === "current loans") ? matching_offer_loading : collateral_loading;
-  const offers = (activeTab !== "current loans") ? (offers_ as any[]).filter((offer: any) => offer.is_active) : offers_;
+  const offers = loading_offers ? "..." : ((activeTab !== "current loans") ? (offers_ as any[]).filter((offer: any) => offer.is_active) : offers_);
 
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
