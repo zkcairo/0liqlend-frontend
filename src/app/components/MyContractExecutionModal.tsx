@@ -23,7 +23,6 @@ type Props = {
   onClose: () => void;
   account: any;
   tokenUsed: string;
-  market: string;
 };
 
 function scaleapy(n: number) {
@@ -31,7 +30,7 @@ function scaleapy(n: number) {
   return 100 - 100*Math.pow(((scale - n) / scale), 87600);
 }
 
-function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, market }: Props) {
+function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props) {
 
   const [callData, setCallData] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({
