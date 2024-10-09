@@ -4,7 +4,7 @@ const Bottom = () => {
 
   return (
     <div className="mb-16 text-center">
-    <button>Discord (soon)</button>
+    <button><a href="https://discord.gg/mN8gZUgFS7" target="_blank">Discord</a></button>
     <button><a href="https://twitter.com/0liqlend" target="_blank">Twitter</a></button>
     <button><a href="https://docs.0liqlend.com">Docs</a></button>
     <button>Faq (soon)</button>

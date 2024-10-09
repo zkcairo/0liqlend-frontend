@@ -1,9 +1,348 @@
-import App from "../components/app/app";
+"use client";
 
-export default async function Page() {
+import { useState } from "react";
+import Header from "../components/Header";
+import Bottom from "../components/Bottom";
+import ManagePositionModal from "../components/ManagePositionModal";
+import TakeOrderModal from "../components/TakeOrderModal";
+import MakeOrderModal from "../components/MakeOrderModal";
+import BestRateModal from "../components/BestRateModal";
+import OrderBookGraph from "../components/OrderBookGraph";
+import { useContractRead } from "@starknet-react/core";
+import MyAbi from "../abi/mycontract.abi.json";
+import { sortByYield } from "@/app/utils/array";
+import { formatCurrency, formatTime } from "@/app/utils/format";
+const contractAddress = CONTRACT_ADDRESS;
+import {
+  useAccount,
+  useDisconnect,
+  useStarkProfile,
+} from "@starknet-react/core";
+import { CONTRACT_ADDRESS, ETH_CATEGORY, PLATFORM_FEE_APY, USDC_CATEGORY } from "@/app/utils/constant";
+
+
+// Todo
+// Dans bestrate quand on match pour trouver les meilleurs offres, faire l'inverse de compute_max_interest pour savoir combien on peut prendre sur l'offre
+// Les borrowing amount affichés sur le front sont pas les bons, ça a été patch dans le code cairo mais pas deployé
+
+
+
+
+
+
+
+// Voir pour l'allowance, qu'on utilise que allowance et pas increaseallowance - voir que c'est partout bien géré
+
+// Dans la la liste des collaterals, le 6 de decimal est hardcodé - changer ça
+
+// Todo organiser la liste des loans par date restant avant la liquidation?
+
+// Repay un loan j'ai pas encore testé
+// Dans le loan mettre dans le code cairo le token utilisé, et l'afficher dans l'ui
+// De maniere generale, patch le code cairo, et faire un affichage different si on doit repay ou pas (si on est lender ou non)
+// toRepayAmount dans l'appel de repay_debt de l'ui
+
+// Add points to the cairo code
+
+
+
+
+// Regler ce probleme de amount available --- a priori ok - todo l'update ici dans le js
+// Faire un loaned amount --- ??
+// Trier, filtrer, etc... a chaque fois qu'on affiche un tableau --- ça verifier mais déjà fait a priori
+// Avoir une fonction "can take order" savoir si un user a les fonds pour prendre tel order ou non - ou inclure ça direct dans la fonction qui renvoit tout --- ??
+// Le match de offer: c'est le borrow qui choisit tous les termes tant qu'ils sont dans les termes du lender?
+// Quand on choisit le collateral, laisser le choix entre un collateral deja posseder et un nouveau
+
+
+
+
+
+
+
+
+
+export default function OrderBookPage() {
+
+  const { account, status, isConnected } = useAccount();
+
+  const [market, setMarket] = useState("USDC");
+  const [duration, setDuration] = useState("1 Week");
+  const [advancedSelection, setAdvancedSelection] = useState(false);
+  const [minimalDuration, setMinimalDuration] = useState(7*24);
+  const [maximalDuration, setMaximalDuration] = useState(7*24);
+
+  const [isManagePositionModalOpen, setIsManagePositionModalOpen] = useState(false);
+  const [isTakeOrderModalOpen, setIsTakeOrderModalOpen] = useState(false);
+  const [isMakeOrderModalOpen, setIsMakeOrderModalOpen] = useState(false);
+  const [bestRateModalOpen, setBestRateModalOpen] = useState(false);
+
+  const currentCategory = market === "USDC" ? USDC_CATEGORY : ETH_CATEGORY;
+
+  //ETH
+  const { data: users_data, isLoading: users_loading } = useContractRead({
+    address: contractAddress,
+    abi: MyAbi,
+    functionName: "frontend_get_all_offers",
+    args: [currentCategory],
+    watch: true,
+  });
+  const all_offers = users_loading ? [Array(), Array()] : users_data;
+  console.log("all offers", all_offers);
+
+  const orderBookData = {
+    USDC: {
+      buyOrders: sortByYield(all_offers[0], "borrow")
+        .filter((offer) => offer.is_active)
+        .filter((offer) => maximalDuration*3600 <= Number(offer.price.maximal_duration))
+        .filter((offer) => minimalDuration*3600 >= Number(offer.price.minimal_duration))
+        .filter((offer) => Number(offer.amount_available) > 10**17)
+        .map((offer) => ({
+          // TODO LE FACTORISER CE CALCUL
+          volume: formatCurrency(Number(offer.amount_available)),
+          min_duration: Number(offer.price.minimal_duration),
+          max_duration: Number(offer.price.maximal_duration),
+          yield: Number(offer.price.rate) / 10000 - 1,
+        })),
+      sellOrders: sortByYield(all_offers[1], "lend")
+      .filter((offer) => offer.is_active)
+        .filter((offer) => maximalDuration*3600 <= Number(offer.price.maximal_duration))
+        .filter((offer) => minimalDuration*3600 >= Number(offer.price.minimal_duration))
+        .filter((offer) => Number(offer.amount_available) > 10**17)
+        .map((offer) => ({
+          volume: formatCurrency(Number(offer.amount_available)),
+          min_duration: Number(offer.price.minimal_duration),
+          max_duration: Number(offer.price.maximal_duration),
+          yield: Number(offer.price.rate) / 10000 + 1,
+        })),
+    },
+    ETH: {
+      buyOrders: [
+        { volume: Number(2756), yield: Number(2.838) },
+        { volume: Number(3621), yield: Number(2.836) },
+      ],
+      sellOrders: [
+        { volume: Number(3009), yield: Number(2.856) },
+        { volume: Number(5000), yield: Number(2.858) },
+      ],
+    },
+    STRK: {
+      buyOrders: [
+        { volume: Number(3221), yield: Number(2.832) },
+        { volume: Number(1397), yield: Number(2.830) },
+      ],
+      sellOrders: [
+        { volume: Number(2054), yield: Number(2.860) },
+        { volume: Number(1778), yield: Number(2.862) },
+      ],
+    },
+  };
+
+  const disableButton = false; // Change this based on your logic
+
+  const handleDurationChange = (newDuration: string) => {
+    setDuration(newDuration);
+    const int_duration = newDuration === "1 Day" ? 24 : newDuration === "1 Week" ? 7 * 24 : newDuration === "1 Month" ? 30 * 24 : 365 * 24;
+    setMinimalDuration(int_duration);
+    setMaximalDuration(int_duration);
+  };
+
   return (
     <div className="container mx-auto py-10">
-      <App />
+      <div className="flex flex-col dark:text-white text-black">
+        {isManagePositionModalOpen && (
+          <ManagePositionModal
+            isOpen={isManagePositionModalOpen}
+            onClose={() => setIsManagePositionModalOpen(false)}
+            account={account}
+            tokenUsed={market}
+            category={currentCategory}
+          />
+        )}
+        {isTakeOrderModalOpen && (
+          <TakeOrderModal
+            isOpen={isTakeOrderModalOpen}
+            onClose={() => setIsTakeOrderModalOpen(false)}
+            account={account}
+            tokenUsed={market}
+            category={currentCategory}
+          />
+        )}
+        {isMakeOrderModalOpen && (
+          <MakeOrderModal
+            isOpen={isMakeOrderModalOpen}
+            onClose={() => setIsMakeOrderModalOpen(false)}
+            account={account}
+            tokenUsed={market}
+            category={currentCategory}
+          />
+        )}
+        {bestRateModalOpen && (
+          <BestRateModal
+            isOpen={bestRateModalOpen}
+            onClose={() => setBestRateModalOpen(false)}
+            account={account}
+            tokenUsed={market}
+            category={currentCategory}
+            alloffers={all_offers}
+          />
+        )}
+        <Header />
+        <div className="flex items-center justify-center flex-col">
+          <h1 className="text-4xl md:text-6xl font-bold mt-96 md:mt-10">Lending market:</h1>
+          <h2 className="text-1xl md:text-2xl">
+            {advancedSelection && (<>{market} market, loan between {formatTime(minimalDuration)} and {formatTime(maximalDuration)}</>)}
+            {!advancedSelection && (<>{market} market, loan of {duration}</>)}
+          </h2>
+
+          <div className="flex gap-4 mt-4">
+            <button onClick={() => setMarket("USDC")} className={`py-2 px-4 ${market === "USDC" ? "buttonselected" : ""}`}>
+              USDC
+            </button>
+            <button onClick={() => setMarket("ETH")} className={`py-2 px-4 ${market === "ETH" ? "buttonselected" : ""}`}>
+              ETH
+            </button>
+            <button disabled className="disabled:bg-gray-300 disabled:text-white">
+              STRK
+            </button>
+          </div>
+
+            {advancedSelection && (
+                <div className="flex gap-4 mt-4">
+                <input
+                  type="range"
+                  className="w-full"
+                  min="1"
+                  max="1100"
+                  step="1"
+                  value={Math.log2(minimalDuration) * 100}
+                  onChange={(e) => setMinimalDuration(Math.pow(2, Number(e.target.value) / 100))}
+                />
+                <input
+                  type="range"
+                  className="w-full"
+                  min="470"
+                  max="1100"
+                  step="1"
+                  value={Math.log2(maximalDuration) * 100}
+                  onChange={(e) => setMaximalDuration(Math.pow(2, Number(e.target.value) / 100))}
+                />
+                </div>
+            )}
+
+
+          <div className="flex gap-4 mt-4">
+            {!advancedSelection && (<>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Day")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Day" ? "buttonselected" : ""}`}>
+              1 Day
+            </button>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Week")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Week" ? "buttonselected" : ""}`}>
+              1 Week
+            </button>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Month")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Month" ? "buttonselected" : ""}`}>
+              1 Month
+            </button>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Year")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Year" ? "buttonselected" : ""}`}>
+              1 Year
+            </button>
+            </>)}
+            <button onClick={() => {advancedSelection && handleDurationChange("1 Day"); setAdvancedSelection(!advancedSelection)}} className={`py-2 px-4 ${advancedSelection ? "buttonselected" : ""}`}>
+              Advanced selection
+            </button>
+          </div>
+
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 mt-5`}>
+            <div className="w-full mt-2 mb-1">
+              <div className="flex justify-between mb-4">
+                <h4 className="text-lg text-center w-full border-b-2">Borrow Orders</h4>
+                <h4 className="text-lg text-center w-full border-b-2">Lend Orders</h4>
+              </div>
+              <div className="grid grid-cols-2">
+                <div className="border-r pr-4">
+                  <div className="flex justify-between text-lg">
+                    <span><u><b>Yield</b></u></span>
+                    <span><u><b>Volume</b></u></span>
+                  </div>
+                  {orderBookData[market].buyOrders.slice(0, 4).map((order, index) => (
+                    <div key={index} className="flex justify-between text-lg">
+                      <span>{order.yield}%</span>
+                      <span>{order.volume}$</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between text-lg">
+                    <span>...</span>
+                    <span>...</span>
+                  </div>
+                </div>
+                <div className="pl-4">
+                  <div className="flex justify-between text-lg">
+                    <span><u><b>Yield</b></u></span>
+                    <span><u><b>Volume</b></u></span>
+                  </div>
+                  {orderBookData[market].sellOrders.slice(0, 4).map((order, index) => (
+                    <div key={index} className="flex justify-between text-lg">
+                      <span>{order.yield}%</span>
+                      <span>{order.volume}$</span>
+                    </div>
+                  ))}
+                  <div className="flex justify-between text-lg">
+                    <span>...</span>
+                    <span>...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full h-56 md:h-full">
+              <OrderBookGraph 
+                buyOrders={orderBookData[market].buyOrders} 
+                sellOrders={orderBookData[market].sellOrders} 
+              />
+            </div>
+          </div>
+
+
+          <div className="block mt-5 mb-5">
+            <button
+              onClick={() => { setBestRateModalOpen(true); }}
+              className="py-3 px-4"
+            >
+            Lend/Borrow at the best available rate (<u>recommended</u>)
+            </button>
+          </div>
+          <div className="text-center mb-10 md:mb-0">
+            <button
+              onClick={() => { setIsTakeOrderModalOpen(true); }}
+              className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
+              title="Soon"
+              disabled
+            >
+              Take Order
+            </button>
+            <button
+              onClick={() => { setIsManagePositionModalOpen(true); }}
+              disabled={!isConnected}
+              className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
+            >
+              Manage Positions
+            </button>
+            <button
+              onClick={() => { setIsMakeOrderModalOpen(true); }}
+              disabled={!isConnected}
+              className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
+            >
+              Make Order
+            </button>
+            <div className="block">
+              <button className="py-3 px-4">
+                <a href="https://docs.0liqlend.com/0liqlend/guide-to-use-the-app">Guide to use this app</a>
+              </button>
+            </div>
+            <div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -663,7 +663,7 @@
       },
       {
         "type": "function",
-        "name": "balanceOf",
+        "name": "balance_of",
         "inputs": [
           {
             "name": "account",

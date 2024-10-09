@@ -8,7 +8,7 @@ import rightArr from "../../../public/assets/right-arr.svg";
 import toast from "react-hot-toast";
 import Erc20Abi from "../abi/token.abi.json";
 import MyAbi from "../abi/mycontract.abi.json";
-import { ETH_SEPOLIA, STRK_SEPOLIA, USDC_SEPOLIA } from "@/app/utils/constant";
+import { CONTRACT_ADDRESS, ETH_SEPOLIA, STRK_SEPOLIA, USDC_SEPOLIA } from "@/app/utils/constant";
 import { formatCurrency } from "@/app/utils/currency";
 import { useContractRead } from "@starknet-react/core";
 
@@ -23,6 +23,7 @@ type Props = {
   onClose: () => void;
   account: any;
   tokenUsed: string;
+  market: string;
 };
 
 function scaleapy(n: number) {
@@ -30,7 +31,7 @@ function scaleapy(n: number) {
   return 100 - 100*Math.pow(((scale - n) / scale), 87600);
 }
 
-function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props) {
+function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, market }: Props) {
 
   const [callData, setCallData] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({
@@ -42,12 +43,12 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const contractAddress = "0x0347def0979f4e07685a5021c8918bdd8a53e5e3425c84605ac32aef592f8060";
+  const contractAddress = CONTRACT_ADDRESS;
 
   const { data: eth, isLoading: ethLoading } = useContractRead({
     address: ETH_SEPOLIA,
     abi: Erc20Abi,
-    functionName: "balanceOf",
+    functionName: "balance_of",
     args: [account.address],
     watch: true,
   });
@@ -55,7 +56,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const { data: strk, isLoading: strkLoading } = useContractRead({
     address: STRK_SEPOLIA,
     abi: Erc20Abi,
-    functionName: "balanceOf",
+    functionName: "balance_of",
     args: [account.address],
     watch: true,
   });
@@ -63,7 +64,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed }: Props
   const { data: usdc, isLoading: usdcLoading } = useContractRead({
     address: USDC_SEPOLIA,
     abi: Erc20Abi,
-    functionName: "balanceOf",
+    functionName: "balance_of",
     args: [account.address],
     watch: true,
   });

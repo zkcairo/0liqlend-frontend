@@ -110,7 +110,7 @@ const Header = () => {
         <meta name="twitter:image" content="https://0LiqLend.com/image.png" />
         <meta name="twitter:url" content="https://0LiqLend.com" />
 
-        <link rel="icon" href="https://0LiqLend.com/favicon.jpeg" />
+        <link rel="icon" type="image/png" href="https://0LiqLend.com/favicon.jpeg" />
 
 
       <header

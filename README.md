@@ -18,10 +18,6 @@ Starknet and cairo are experimental technology. It could have bugs that could re
 
 The app is new, so as every lending app if there aren't enough liquidity it could result in your funds being stucked in the platform.
 
-The app relies solely on ekubo. If ekubo has a bug or no liquidity, it could result in your funds being stucked in the platform.
-
-The app currently do not check the price given by ekubo. If the swap made through ekubo has a catastrophic price it could result in loss on your side that I am not responssible for (todo will fix that issue soon)
-
 I reserve the right to modify your number of points at anytime.
 Maybe there won't be an airdrop.
 Points do not entitle you to a potential airdrop.

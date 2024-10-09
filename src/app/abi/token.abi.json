@@ -109,7 +109,7 @@
           "type": "felt"
         }
       ],
-      "name": "balanceOf",
+      "name": "balance_of",
       "outputs": [
         {
           "name": "balance",

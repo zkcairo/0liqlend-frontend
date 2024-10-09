@@ -6,43 +6,72 @@ import Bottom from "./components/Bottom";
 import MyAbi from "./abi/mycontract.abi.json";
 import { useContractRead } from "@starknet-react/core";
 import HeaderNoConnect from "./components/HeaderNoConnect";
+import { formatCurrency, formatYield } from "./utils/format";
+import { CONTRACT_ADDRESS, ETH_CATEGORY, USDC_CATEGORY } from "./utils/constant";
 
 
 
 export default function Home() {
-  const contractAddress = "0x0347def0979f4e07685a5021c8918bdd8a53e5e3425c84605ac32aef592f8060";
+  const contractAddress = CONTRACT_ADDRESS;
 
-  const { data: users_data, isLoading: users_loading } = useContractRead({
+  const { data: best_yield_eth_data, isLoading: best_yield_eth_loading } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_get_number_of_users",
-    args: [],
+    functionName: "frontend_best_available_yield",
+    args: [ETH_CATEGORY],
     watch: true,
   });
-  const users = users_loading ? "Loading..." : Number(users_data);
+  const bestYieldEthBorrow = best_yield_eth_loading ? "..." : formatYield(best_yield_eth_data[0]);
+  const bestYieldEthLend = best_yield_eth_loading ? "..." : formatYield(best_yield_eth_data[1]);
 
-  const { data: tlv_data, isLoading: tlv_loading } = useContractRead({
+  const { data: best_yield_data_usdc, isLoading: best_yield_loading_usdc } = useContractRead({
     address: contractAddress,
     abi: MyAbi,
-    functionName: "frontend_get_TLV",
-    args: [],
+    functionName: "frontend_best_available_yield",
+    args: [USDC_CATEGORY],
     watch: true,
   });
-  const tlv = tlv_loading ? "Loading..." : Number(Number(tlv_data) / 10**26).toFixed(0);
+  const bestYieldUsdcLend = best_yield_loading_usdc ? "..." : formatYield(best_yield_data_usdc[0]);
+  const bestYieldUsdcBorrow = best_yield_loading_usdc ? "..." : formatYield(best_yield_data_usdc[1]);
+
+  const { data: volume_eth_data, isLoading: volume_eth_loading } = useContractRead({
+    address: contractAddress,
+    abi: MyAbi,
+    functionName: "frontend_available_to_lend_and_borrow",
+    args: [ETH_CATEGORY],
+    watch: true,
+  });
+  const volumeEthLend = volume_eth_loading ? "..." : formatCurrency(volume_eth_data[0]);
+  const volumeEthBorrow = volume_eth_loading ? "..." : formatCurrency(volume_eth_data[1]);
+
+  const { data: volume_usdc_data, isLoading: volume_usdc_loading } = useContractRead({
+    address: contractAddress,
+    abi: MyAbi,
+    functionName: "frontend_available_to_lend_and_borrow",
+    args: [USDC_CATEGORY],
+    watch: true,
+  });
+  console.log("volume", volume_usdc_loading, volume_usdc_data);
+  // const volumeUsdcLend = 0;
+  // const volumeUsdcBorrow = 0;
+  const volumeUsdcBorrow = volume_usdc_loading ? "..." : formatCurrency(volume_usdc_data[0]);
+  const volumeUsdcLend = volume_usdc_loading ? "..." : formatCurrency(volume_usdc_data[1]);
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-24 md:p-24">
       <HeaderNoConnect />
         <h1 className="text-6xl font-bold mt-15">0LiqLend</h1>
         <center className="mt-5"><p className="text-2xl">
-          A lending app on Starknet where every interaction with the platform automatically
-          liquidate every eligible position to limit bad debts/liq penalties.
+          A peer-to-peer lending app on Starknet.<br></br>
+          Choose your yield, loan duration, and let the market take it.
         </p></center>
       <div className="border border-gray-300 rounded-lg p-8 mt-5">
         <ul className="text-xl">
           <h4 className="text-4xl font-bold mb-8">Platform Statistics</h4>
-          <li>Number of users: {users}</li>
-          <li>TLV: {tlv}$</li>
+          {/* <li>Current ETH yield (APR): {bestYieldEthBorrow}% lend / {bestYieldEthLend}% borrow</li>
+          <li>Available on the ETH market: {volumeEthBorrow}$ lend / {volumeEthLend}$ borrow</li> */}
+          {/* <li>Current USDC yield (APR): {bestYieldUsdcLend}% lend / {bestYieldUsdcBorrow}% borrow</li>
+          <li>Available on USDC market: {volumeUsdcBorrow}$ to lend / {volumeUsdcLend}$ to borrow</li> */}
         </ul>
       </div>
         <div className="text-center mt-5">
