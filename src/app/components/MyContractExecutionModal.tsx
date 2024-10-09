@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import Erc20Abi from "../abi/token.abi.json";
 import MyAbi from "../abi/mycontract.abi.json";
 import { CONTRACT_ADDRESS, ETH_SEPOLIA, STRK_SEPOLIA, USDC_SEPOLIA } from "@/app/utils/constant";
-import { formatCurrency } from "@/app/utils/currency";
+import { formatCurrency } from "@/app/utils/format";
 import { useContractRead } from "@starknet-react/core";
 
 interface Errors {

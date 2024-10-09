@@ -42,7 +42,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
   const [id, setId] = useState(999999999999);
   const [lend_or_borrow, setLend_or_borrow] = useState(0);
 
-  const setsetFinalOpen = (id) => {
+  const setsetFinalOpen = (id: any) => {
     setFinalOpen(true);
     setId(id);
   }
@@ -254,7 +254,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           max="100"
           step="1"
           // value={minimalDuration}
-          onChange={(e) => setMinimalDuration(e.target.value)}
+          // Todo devrait pas etre commente
+          // onChange={(e) => setMinimalDuration(e.target.value)}
         />
       </div>
     </div>
@@ -271,7 +272,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           max="100"
           step="1"
           //{maximalDuration}
-          onChange={(e) => setMaximalDuration(Number(e.target.value))}
+          // Todo idem devrait pas etre commente
+          // onChange={(e) => setMaximalDuration(Number(e.target.value))}
         />
       </div>
     </div>
@@ -288,7 +290,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
 
         {activeTab === "All Lend Offers" && (
           <AllOffers
-            offers={all_offers[1]}
+            offers={(all_offers as any)[1]}
             loading={users_loading}
             type="lend"
             me={false}
@@ -298,7 +300,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
         )}
         {activeTab === "All Borrow Offers" && (
           <AllOffers
-            offers={all_offers[0]}
+            offers={(all_offers as any)[0]}
             loading={users_loading}
             type="borrow"
             me={false}
@@ -313,7 +315,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           isOpen={finalOpen}
           onClose={() => setFinalOpen(false)}
           account={account}
-          offer={all_offers[lend_or_borrow][id]}
+          offer={(all_offers as any)[lend_or_borrow][id]}
           isLend={activeTab === "All Lend Offers"}
           />
       }

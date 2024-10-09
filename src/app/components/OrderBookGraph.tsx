@@ -4,24 +4,24 @@ import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const OrderBookGraph = ({ buyOrders, sellOrders }) => {
+const OrderBookGraph = ({ buyOrders, sellOrders }: any) => {
   // Convert order data into cumulative totals for graph
-  const processOrders = (orders, type) => {
+  const processOrders = (orders: any, type: any) => {
     let cumulativeVolume = 0;
     return orders
-      .sort((a, b) => (type === "sell" ? a.yield - b.yield : b.yield - a.yield))
-      .map(order => {
+      .sort((a: any, b: any) => (type === "sell" ? a.yield - b.yield : b.yield - a.yield))
+      .map((order: any) => {
         cumulativeVolume += order.volume;
         return { x: order.yield, y: cumulativeVolume };
       })
-      .sort((a, b) => (a.x - b.x))
+      .sort((a: any, b: any) => (a.x - b.x))
   };
 
   let buyData = processOrders(buyOrders, "buy");
   let sellData = processOrders(sellOrders, "sell");
 
-  let left = buyData.map(data => data.x);
-  const right = sellData.map(data => data.x);
+  let left = buyData.map((data: any) => data.x);
+  const right = sellData.map((data: any) => data.x);
   
   let labels = left.concat(right);
 
@@ -104,7 +104,7 @@ const OrderBookGraph = ({ buyOrders, sellOrders }) => {
   };
 
   return (
-      <Line data={data} options={options} />
+      <Line data={data as any} options={options as any} />
   );
 };
 

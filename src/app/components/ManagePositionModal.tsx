@@ -92,7 +92,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
   const loading_offers = (activeTab === "lend offers") ? lending_offer_loading :
                   (activeTab === "borrow offers") ? borrowing_offer_loading :
                   (activeTab === "current loans") ? matching_offer_loading : collateral_loading;
-  const offers = (activeTab !== "current loans") ? offers_?.filter((offer) => offer.is_active) : offers_;
+  const offers = (activeTab !== "current loans") ? (offers_ as any[]).filter((offer: any) => offer.is_active) : offers_;
 
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -135,7 +135,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     }
   }, [isOpen]);
 
-  async function handleExecute(id) {
+  async function handleExecute(id: any) {
     // Todo - remove allowance?
     console.log("deploy");
     let success = false;
@@ -152,7 +152,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       console.log(id);
       let call: any[] = [];
       if (functionName === "repay_debt") {
-        const toRepayAmount = Math.round(1.001 * id[2] * 10**getDecimalsOfAsset(prettyNameFromAddress(id[1].toString(16))) / 10**18);
+        const toRepayAmount = Math.round(1.001 * id[2] * 10**(getDecimalsOfAsset(prettyNameFromAddress(id[1].toString(16))) as any) / 10**18);
         call.push({
           contractAddress: id[1].toString(), // Todo: Not yet in the cairo code so here it's undefined
           calldata: [contractAddress, toRepayAmount.toString(), 0].map((value) => String(value)),
@@ -240,7 +240,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
 
       {((activeTab === "lend offers") || (activeTab === "borrow offers")) && (
           <AllOffers
-          offers={offers}
+          offers={offers as any[]}
           loading={loading_offers}
           type={activeTab === "lend offers" ? "lend" : "borrow"}
           me={true}
@@ -253,7 +253,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
         <h1><center>Current date: {currentTime()}</center></h1>
         <hr></hr>
           <AllOffers
-          offers={offers}
+          offers={offers as any[]}
           loading={loading_offers}
           type={"loan"}
           me={true}
@@ -264,7 +264,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       )}
       {activeTab === "collaterals" && (
           <AllOffers
-          offers={offers}
+          offers={offers as any[]}
           loading={loading_offers}
           type={"collateral"}
           me={true}
@@ -274,7 +274,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       )}
 
 
-      {offers && offers.length == 0 && (
+      {(offers as any) && (offers as any[]).length == 0 && (
         <div className="text-center text-lg">Currently, you do not have any {activeTab}.</div>
       )}
 

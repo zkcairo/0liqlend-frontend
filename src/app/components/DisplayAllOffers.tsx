@@ -7,7 +7,7 @@ import { getDecimalsOfAsset, prettyNameFromAddress } from "../utils/erc20";
 import { computeInterest } from "../utils/interest";
 
 type Props = {
-  offers: [];
+  offers: any[];
   loading: boolean;
   type: "lend" | "borrow" | "loan" | "collateral";
   me: boolean;
@@ -53,9 +53,9 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
           </div>
         )))}
         {/* Type: BORROW */}
-        {(type === "loan") && (offers[0]
-                              .map((offer) => { let res = offer[0]; res.token = offer[1]; return res })
-                              .filter((offer) => offer.is_active)
+        {(type === "loan") && ((offers as any[])[0]
+                              .map((offer: any) => { let res = offer[0]; res.token = offer[1]; return res })
+                              .filter((offer: any) => offer.is_active)
                               .map((offer: any, index: number) => (
           <div key={index} className="flex flex-col gap-y-2">
             <h2>Loan id {offer.id.toString()} (you borrow):</h2>
@@ -92,9 +92,9 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
         )))}
         {/* TODO: METTRE OFFER[0] et offer[1] à la place de offer ici plus bas dans loan */}
         {/* Type: LEND */}
-        {(type === "loan") && (offers[1]
-                              .map((offer) => { let res = offer[0]; res.token = offer[1]; return res })
-                              .filter((offer) => offer.is_active)
+        {(type === "loan") && ((offers as any[])[1]
+                              .map((offer: any) => { let res = offer[0]; res.token = offer[1]; return res })
+                              .filter((offer: any) => offer.is_active)
                               .map((offer: any, index: number) => (
           <div key={index} className="flex flex-col gap-y-2">
             <h2>Loan id {offer.id.toString()} (you lend):</h2>

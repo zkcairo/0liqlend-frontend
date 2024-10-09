@@ -189,7 +189,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
 
     // Todo voir pour les decimals
     const inputAmountAfterInterestAfterLtv = String(Number(price_of_asset) * Number(inputAmountAfterInterest) * 100 / Number(ltv_of_asset));
-    let inputAmountAfterInterestAfterLtv_arg = choosenAsset === "" ? -1 : Number(1+Math.round(Number(inputAmountAfterInterestAfterLtv) / 10**18 * 10**getDecimalsOfAsset(prettyNameFromAddress(choosenAsset))));
+    let inputAmountAfterInterestAfterLtv_arg = choosenAsset === "" ? -1 : Number(1+Math.round(Number(inputAmountAfterInterestAfterLtv) / 10**18 * 10**(getDecimalsOfAsset(prettyNameFromAddress(choosenAsset)) as any)));
 
   return (
     <GenericModal
@@ -272,8 +272,8 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
           <input
             type="range"
             className="w-full"
-            min={isOpen && (Math.log2(1 + 24 + Number(offer.price.minimal_duration) / 3600) * 100)}
-            max={isOpen && (Math.log2(Number(offer.price.maximal_duration) / 3600) * 100)}
+            min={(isOpen && (Math.log2(1 + 24 + Number(offer.price.minimal_duration) / 3600) * 100)) as any}
+            max={(isOpen && (Math.log2(Number(offer.price.maximal_duration) / 3600) * 100)) as any}
             step="1"
             value={Math.log2(choosenDuration) * 100}
             onChange={(e) => setchoosenDuration(Math.pow(2, Number(e.target.value) / 100))}
@@ -324,8 +324,8 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
 
         <ChooseAsset
           type={isLend ? "borrow" : "lend"}
-          baseAsset={isOpen && prettyNameFromAddress(offer.token.toString(16))}
-          address={account.address}
+          baseAsset={(isOpen && prettyNameFromAddress(offer.token.toString(16))) as any}
+          address={(account.address as any)}
           above_choosenAsset={choosenAsset}
           set_above_choosenAsset={setChoosenAsset}
         />
@@ -345,7 +345,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
             <h2>Total amount of collateral required</h2>
           </div>
           <div className="flex flex-col justify-center">
-            <h2>{formatCurrency(inputAmountAfterInterestAfterLtv)} <DisplayToken address={choosenAsset}/></h2>
+            <h2>{formatCurrency(inputAmountAfterInterestAfterLtv as any)} <DisplayToken address={choosenAsset}/></h2>
           </div>
         </div>
         </>

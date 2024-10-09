@@ -93,11 +93,11 @@ export function prettyNameFromAddress(address_: string) {
     }
 }
 
-export function normalizeAmountLend(value, decimals) {
+export function normalizeAmountLend(value: any, decimals: any) {
     return (10 ** 18 * value) / (10 ** decimals);
 }
 // Todo, read TLV
-export function normalizeAmountBorrow(value, decimals) {
+export function normalizeAmountBorrow(value: any, decimals: any) {
     return (10 ** 18 * value) / (10 ** decimals);
 }
 
