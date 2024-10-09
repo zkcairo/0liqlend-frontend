@@ -36,7 +36,7 @@ const TransactionItem = ({ transaction }: { transaction: Transaction }) => {
       </div>
       <div className="flex w-full justify-between items-center my-3">
         <p className="text-gray-500 text-xs">
-          {formatDate(transaction.createdAt)}
+          {formatDate(transaction.createdAt as any)}
         </p>
 
         <button className="text-[#f77448] hover:text-[#f77448] text-xs font-semibold">
