@@ -290,7 +290,8 @@ export default function OrderBookPage() {
           <div className="block mt-5 mb-5">
             <button
               onClick={() => { setBestRateModalOpen(true); }}
-              className="py-3 px-4"
+              disabled={!isConnected}
+              className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
             >
             Lend/Borrow at the best available rate (<u>recommended</u>)
             </button>
