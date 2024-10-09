@@ -46,7 +46,7 @@ export function matchLend(offer: any, all_offers: any[]) {
     return [answer, Number(average_rate) / Number(offer.amount)];
 }
 
-
+export function matchBorrow(offer: any, all_offers: any[]) { return [[], ""]; }
 // export function matchBorrow(offer: any, all_offers: any[]) {
 //     let all_lend = sortByYield(all_offers[0], "lend");
 //     let amount = BigInt(offer.amount);

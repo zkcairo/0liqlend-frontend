@@ -66,7 +66,7 @@ export default function OrderBookPage() {
 
   const { account, status, isConnected } = useAccount();
 
-  const [market, setMarket] = useState("USDC");
+  const [market, setMarket] = useState<MarketType>("USDC");
   const [duration, setDuration] = useState("1 Week");
   const [advancedSelection, setAdvancedSelection] = useState(false);
   const [minimalDuration, setMinimalDuration] = useState(7*24);
@@ -87,10 +87,15 @@ export default function OrderBookPage() {
     args: [currentCategory],
     watch: true,
   });
-  const all_offers = users_loading ? [Array(), Array()] : users_data;
+  const all_offers = users_loading ? [Array(), Array()] : users_data as any[];
   console.log("all offers", all_offers);
 
-  const orderBookData = {
+  type MarketType = "USDC";
+
+  const orderBookData: Record<MarketType, {
+    buyOrders: { volume: number; min_duration: number; max_duration: number; yield: number; }[];
+    sellOrders: { volume: number; min_duration: number; max_duration: number; yield: number; }[];
+  }> = {
     USDC: {
       buyOrders: sortByYield(all_offers[0], "borrow")
         .filter((offer) => offer.is_active)
@@ -115,26 +120,6 @@ export default function OrderBookPage() {
           max_duration: Number(offer.price.maximal_duration),
           yield: Number(offer.price.rate) / 10000 + 1,
         })),
-    },
-    ETH: {
-      buyOrders: [
-        { volume: Number(2756), yield: Number(2.838) },
-        { volume: Number(3621), yield: Number(2.836) },
-      ],
-      sellOrders: [
-        { volume: Number(3009), yield: Number(2.856) },
-        { volume: Number(5000), yield: Number(2.858) },
-      ],
-    },
-    STRK: {
-      buyOrders: [
-        { volume: Number(3221), yield: Number(2.832) },
-        { volume: Number(1397), yield: Number(2.830) },
-      ],
-      sellOrders: [
-        { volume: Number(2054), yield: Number(2.860) },
-        { volume: Number(1778), yield: Number(2.862) },
-      ],
     },
   };
 
@@ -199,10 +184,10 @@ export default function OrderBookPage() {
             <button onClick={() => setMarket("USDC")} className={`py-2 px-4 ${market === "USDC" ? "buttonselected" : ""}`}>
               USDC
             </button>
-            <button onClick={() => setMarket("ETH")} className={`py-2 px-4 ${market === "ETH" ? "buttonselected" : ""}`}>
+            <button disabled onClick={() => setMarket("USDC")} className={`py-2 px-4 disabled:bg-gray-300 disabled:text-white`}>
               ETH
             </button>
-            <button disabled className="disabled:bg-gray-300 disabled:text-white">
+            <button disabled className={`py-2 px-4 disabled:bg-gray-300 disabled:text-white`}>
               STRK
             </button>
           </div>

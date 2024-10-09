@@ -21,8 +21,8 @@ export default function Home() {
     args: [ETH_CATEGORY],
     watch: true,
   });
-  const bestYieldEthBorrow = best_yield_eth_loading ? "..." : formatYield(best_yield_eth_data[0]);
-  const bestYieldEthLend = best_yield_eth_loading ? "..." : formatYield(best_yield_eth_data[1]);
+  const bestYieldEthBorrow = best_yield_eth_loading ? "..." : formatYield((best_yield_eth_data as any[])[0]);
+  const bestYieldEthLend = best_yield_eth_loading ? "..." : formatYield((best_yield_eth_data as any[])[1]);
 
   const { data: best_yield_data_usdc, isLoading: best_yield_loading_usdc } = useContractRead({
     address: contractAddress,
@@ -31,8 +31,8 @@ export default function Home() {
     args: [USDC_CATEGORY],
     watch: true,
   });
-  const bestYieldUsdcLend = best_yield_loading_usdc ? "..." : formatYield(best_yield_data_usdc[0]);
-  const bestYieldUsdcBorrow = best_yield_loading_usdc ? "..." : formatYield(best_yield_data_usdc[1]);
+  const bestYieldUsdcLend = best_yield_loading_usdc ? "..." : formatYield((best_yield_data_usdc as any[])[0]);
+  const bestYieldUsdcBorrow = best_yield_loading_usdc ? "..." : formatYield((best_yield_data_usdc as any[])[1]);
 
   const { data: volume_eth_data, isLoading: volume_eth_loading } = useContractRead({
     address: contractAddress,
@@ -41,8 +41,8 @@ export default function Home() {
     args: [ETH_CATEGORY],
     watch: true,
   });
-  const volumeEthLend = volume_eth_loading ? "..." : formatCurrency(volume_eth_data[0]);
-  const volumeEthBorrow = volume_eth_loading ? "..." : formatCurrency(volume_eth_data[1]);
+  const volumeEthLend = volume_eth_loading ? "..." : formatCurrency((volume_eth_data as any[])[0]);
+  const volumeEthBorrow = volume_eth_loading ? "..." : formatCurrency((volume_eth_data as any[])[1]);
 
   const { data: volume_usdc_data, isLoading: volume_usdc_loading } = useContractRead({
     address: contractAddress,
@@ -54,8 +54,8 @@ export default function Home() {
   console.log("volume", volume_usdc_loading, volume_usdc_data);
   // const volumeUsdcLend = 0;
   // const volumeUsdcBorrow = 0;
-  const volumeUsdcBorrow = volume_usdc_loading ? "..." : formatCurrency(volume_usdc_data[0]);
-  const volumeUsdcLend = volume_usdc_loading ? "..." : formatCurrency(volume_usdc_data[1]);
+  const volumeUsdcBorrow = volume_usdc_loading ? "..." : formatCurrency((volume_usdc_data as any[])[0]);
+  const volumeUsdcLend = volume_usdc_loading ? "..." : formatCurrency((volume_usdc_data as any[])[1]);
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-24 md:p-24">

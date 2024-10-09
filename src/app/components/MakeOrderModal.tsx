@@ -102,7 +102,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
   });
   let current_allowance = 0;
   if (choosenAsset) {
-    const tmp = current_allowance_loading ? "..." : current_allowance_data.remaining;
+    const tmp = current_allowance_loading ? "..." : (current_allowance_data as any).remaining;
     if (tmp !== "...") { 
       current_allowance = Number(tmp.high.toString() + tmp.low.toString());
       console.log("Allowance", current_allowance);

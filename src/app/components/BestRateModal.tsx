@@ -74,7 +74,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       maximal_duration: maximalDuration * 3600
     }
   }
-  const [list_of_offers, obtainedYield] = activeTab === "Just lend" ? matchLend(chooseOffer, alloffers) : matchBorrow(chooseOffer, alloffers);
+  const [list_of_offers_, obtainedYield] = activeTab === "Just lend" ? matchLend(chooseOffer, alloffers) : matchBorrow(chooseOffer, alloffers);
+  const list_of_offers = list_of_offers_ as any[];
   console.log("list_of_offers", list_of_offers);
   console.log("obtainedYield", obtainedYield);
 
@@ -136,7 +137,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
   });
   let current_allowance = 0;
   if (choosenAsset) {
-    const tmp = current_allowance_loading ? "..." : current_allowance_data.remaining;
+    const tmp = current_allowance_loading ? "..." : (current_allowance_data as any).remaining;
     if (tmp !== "...") { 
       current_allowance = Number(tmp.high.toString() + tmp.low.toString());
       console.log("Allowance", current_allowance);
@@ -390,7 +391,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
             <h2>Yield you {activeTab === "Just lend" ? "get" : "pay"} in %</h2>
           </div>
           <div className="flex flex-col justify-center">
-            <h2>{obtainedYield === "" ? "Offer to large for the market" : formatYield(obtainedYield) + (activeTab === "Just lend" ? -1 : 1) + "% (APR)"}</h2>
+            <h2>{obtainedYield === "" ? "Offer to large for the market" : formatYield(Number(obtainedYield as String)) + (activeTab === "Just lend" ? -1 : 1) + "% (APR)"}</h2>
           </div>
         </div>
 
@@ -468,7 +469,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
               await handleExecute();
             }}
             >
-            {activeTab === "Just lend" ? "Lend" : "Borrow"} at {formatYield(obtainedYield) + (activeTab === "Just lend" ? -1 : 1)}% APR
+            {activeTab === "Just lend" ? "Lend" : "Borrow"} at {formatYield(Number(obtainedYield as String)) + (activeTab === "Just lend" ? -1 : 1)}% APR
             <Image
               src={loading ? spinner : rightArr}
               alt={loading ? "loading" : "right arrow"}
