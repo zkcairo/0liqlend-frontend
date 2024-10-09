@@ -70,7 +70,7 @@ export default function Home() {
           <h4 className="text-4xl font-bold mb-8">Platform Statistics</h4>
           {/* <li>Current ETH yield (APR): {bestYieldEthBorrow}% lend / {bestYieldEthLend}% borrow</li>
           <li>Available on the ETH market: {volumeEthBorrow}$ lend / {volumeEthLend}$ borrow</li> */}
-          <li>Current USDC yield (APR): {bestYieldUsdcLend}% lend / {bestYieldUsdcBorrow}% borrow</li>
+          <li>Current USDC yield (APR): {Number(bestYieldUsdcLend)-1}% lend / {Number(bestYieldUsdcBorrow)+1}% borrow</li>
           <li>Available on USDC market: {volumeUsdcBorrow}$ to lend / {volumeUsdcLend}$ to borrow</li>
         </ul>
       </div>
