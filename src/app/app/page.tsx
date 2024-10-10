@@ -174,7 +174,7 @@ export default function OrderBookPage() {
         )}
         <Header />
         <div className="flex items-center justify-center flex-col">
-          <h1 className="text-4xl md:text-6xl font-bold mt-96 md:mt-10">Lending market:</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mt-20 md:mt-10">Lending market:</h1>
           <h2 className="text-1xl md:text-2xl">
             {advancedSelection && (<>{market} market, loan between {formatTime(minimalDuration)} and {formatTime(maximalDuration)}</>)}
             {!advancedSelection && (<>{market} market, loan of {duration}</>)}
@@ -218,25 +218,25 @@ export default function OrderBookPage() {
 
           <div className="flex gap-4 mt-4">
             {!advancedSelection && (<>
-            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Day")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Day" ? "buttonselected" : ""}`}>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Day")}} className={`py-2 px-1 md:px-4 ${!advancedSelection && duration === "1 Day" ? "buttonselected" : ""}`}>
               1 Day
             </button>
-            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Week")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Week" ? "buttonselected" : ""}`}>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Week")}} className={`py-2 px-1 md:px-4 ${!advancedSelection && duration === "1 Week" ? "buttonselected" : ""}`}>
               1 Week
             </button>
-            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Month")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Month" ? "buttonselected" : ""}`}>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Month")}} className={`py-2 px-1 md:px-4 ${!advancedSelection && duration === "1 Month" ? "buttonselected" : ""}`}>
               1 Month
             </button>
-            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Year")}} className={`py-2 px-4 ${!advancedSelection && duration === "1 Year" ? "buttonselected" : ""}`}>
+            <button onClick={() => {setAdvancedSelection(false); handleDurationChange("1 Year")}} className={`py-2 px-1 md:px-4 ${!advancedSelection && duration === "1 Year" ? "buttonselected" : ""}`}>
               1 Year
             </button>
             </>)}
-            <button onClick={() => {advancedSelection && handleDurationChange("1 Day"); setAdvancedSelection(!advancedSelection)}} className={`py-2 px-4 ${advancedSelection ? "buttonselected" : ""}`}>
+            <button onClick={() => {advancedSelection && handleDurationChange("1 Day"); setAdvancedSelection(!advancedSelection)}} className={`py-2 px-4 ${advancedSelection ? "buttonselected" : ""} hidden md:block`}>
               Advanced selection
             </button>
           </div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 mt-5`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
             <div className="w-full mt-2 mb-1">
               <div className="flex justify-between mb-4">
                 <h4 className="text-lg text-center w-full border-b-2">Borrow Orders</h4>
@@ -278,7 +278,7 @@ export default function OrderBookPage() {
               </div>
             </div>
 
-            <div className="w-full h-56 md:h-full">
+            <div className="w-full h-56 md:h-64">
               <OrderBookGraph 
                 buyOrders={orderBookData[market].buyOrders} 
                 sellOrders={orderBookData[market].sellOrders} 
@@ -293,7 +293,8 @@ export default function OrderBookPage() {
               disabled={!isConnected}
               className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
             >
-            Lend/Borrow at the best available rate (<u>recommended</u>)
+                {!isConnected ? "Connect your wallet to use the app" :
+                (<>Lend/Borrow at the best available rate (<u>recommended</u>)</>)}
             </button>
           </div>
           <div className="text-center mb-10 md:mb-0">
@@ -310,14 +311,14 @@ export default function OrderBookPage() {
               disabled={!isConnected}
               className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
             >
-              Manage Positions
+              {!isConnected ? "Connect your wallet to use the app" : "Manage Position"}
             </button>
             <button
               onClick={() => { setIsMakeOrderModalOpen(true); }}
               disabled={!isConnected}
               className="py-3 px-4 disabled:bg-gray-300 disabled:text-white"
             >
-              Make Order
+              {!isConnected ? "Connect your wallet to use the app" : "Make Order"}
             </button>
             <div className="block">
               <button className="py-3 px-4">

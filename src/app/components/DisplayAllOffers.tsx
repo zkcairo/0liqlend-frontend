@@ -41,7 +41,7 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
             <div className="grid grid-cols-3 gap-3">
               <button
                 title={`To prevent further action with this offer, disable it.`}
-                className="mt-1 rounded py-1 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 onClick={async (e) => {
                   action(offer.id);
                   e.preventDefault();
@@ -75,7 +75,7 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
                     "You can't repay, you had to repay before " + formatDate(offer.date_taken + offer.maximal_duration) + " you will get liquidated soon" :
                     "Repay the loan!"
                   }
-                className="mt-1 rounded py-1 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={
                   ((currentDate < new Date(1000 * Number(offer.date_taken + offer.minimal_duration))) ||
                   (new Date(1000 * Number(offer.date_taken + offer.maximal_duration)) > currentDate))
@@ -109,7 +109,7 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
             <div className="grid grid-cols-3 gap-3">
               <button
                 title={"Liquidation will happen automatically, you do not need to monitor for it"}
-                className="mt-1 rounded py-1 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={true}
               >
                 Liquidate
@@ -130,7 +130,7 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
                   "You collateral is used to secure one of you loans. Repay the affected loan to withdraw your collateral" :
                   "Withdraw your collateral"
                 }
-                className="mt-1 rounded py-1 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={Number(offer.total_value) != Number(offer.available_value)}
                 onClick={async (e) => {
                   action(offer.id);
