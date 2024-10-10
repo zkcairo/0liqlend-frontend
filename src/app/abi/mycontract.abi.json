@@ -786,6 +786,45 @@
         ],
         "outputs": [],
         "state_mutability": "external"
+      },
+      {
+        "name": "frontend_get_user_points",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "user",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "name": "frontend_get_total_points",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::integer::u256"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "name": "set_points_multiplier",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "multiplier",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
       }
     ]
   },
