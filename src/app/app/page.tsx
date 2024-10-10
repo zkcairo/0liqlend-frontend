@@ -111,9 +111,6 @@ export default function OrderBookPage() {
         })),
       sellOrders: sortByYield(all_offers[1], "lend")
       .filter((offer) => offer.is_active)
-        .filter((offer) => maximalDuration*3600 <= Number(offer.price.maximal_duration))
-        .filter((offer) => minimalDuration*3600 >= Number(offer.price.minimal_duration))
-        .filter((offer) => Number(offer.amount_available) > 10**17)
         .map((offer) => ({
           volume: formatCurrency(Number(offer.amount_available)),
           min_duration: Number(offer.price.minimal_duration),

@@ -9,6 +9,7 @@ const Bottom = () => {
     <button><a href="https://docs.0liqlend.com">Docs</a></button>
     <button>Faq (soon)</button>
     <button><a href="https://github.com/zkcairo" target="_blank">Github</a></button>
+    <button><a href="/points">Points program</a></button>
   </div>
   );
 };

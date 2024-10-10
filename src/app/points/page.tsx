@@ -78,7 +78,7 @@ export default function Page() {
                 <div className="flex items-center gap-x-2">
                 </div>
                 <div className="flex items-center gap-x-2">
-                  <h4 className="text-base font-medium">Current point incentives: deposit $$$, withdraw do reset points</h4>
+                  <h4 className="text-base font-medium">How to earn points: make loans as a lender or borrower.</h4>
                 </div>
                 <div className="flex items-center gap-x-2">
                 </div>
