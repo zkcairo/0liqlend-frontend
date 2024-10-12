@@ -326,7 +326,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
         <div className="grid grid-cols-2 gap-x-5">
           <div className="flex flex-col justify-center">
           <h2>{activeTab === "Make a Lend Offer" ? "Asked APR: " : "Interest (APR) to pay on the loan: "}
-            {activeTab === "Make a Lend Offer" ? valueYield : valueYield + PLATFORM_FEE_APY / VALUE_1PERCENT_APY}%
+            {valueYield}%
             {activeTab !== "Make a Lend Offer" && (<><br/>(Includes a 1% APR platform fee)</>)}
           </h2>
           </div>
