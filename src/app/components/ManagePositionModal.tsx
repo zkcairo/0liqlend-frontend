@@ -203,9 +203,9 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black"
+      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-svh"
     >
-      <div className="absolute right-5 top-4">
+      <div className="absolute right-5 top-">
         <button
           onClick={(e) => {
             closeModal(e);

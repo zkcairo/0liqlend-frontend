@@ -29,6 +29,7 @@ import { CONTRACT_ADDRESS, ETH_CATEGORY, PLATFORM_FEE_APY, USDC_CATEGORY } from 
 
 
 
+// Todo, dans les trucs que je peux mettre en collateral, mettre que ceux supporté par le protocol atm
 
 
 // Voir pour l'allowance, qu'on utilise que allowance et pas increaseallowance - voir que c'est partout bien géré

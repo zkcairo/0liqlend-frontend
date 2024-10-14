@@ -196,7 +196,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black"
+      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-svh"
     >
       <div className="absolute right-5 top-4">
         <button
@@ -220,7 +220,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
           </button>
         </div>
         <h1 className="text-[24px] mb-2 font-semibold">Summary of your order:</h1>
-        <div className="scroll h-full">
+        <div className="scroll">
         <div className="flex flex-col gap-y-5">
         {isLend && (
         <div className="grid grid-cols-2 gap-x-5">
