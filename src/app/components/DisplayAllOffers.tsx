@@ -17,7 +17,6 @@ type Props = {
 
 const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) => {
   const currentDate = new Date();
-  console.log("ooffres", type, offers);
 
   return (
     <>
@@ -71,14 +70,14 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
                 title={
                   (currentDate < new Date(1000 * Number(offer.date_taken + offer.minimal_duration))) ?
                     "You can't repay yet the loan, you need to wait until " + formatDate(offer.date_taken + offer.minimal_duration) + " to repay" :
-                    (new Date(1000 * Number(offer.date_taken + offer.maximal_duration)) > currentDate) ?
+                    (new Date(1000 * Number(offer.date_taken + offer.maximal_duration)) < currentDate) ?
                     "You can't repay, you had to repay before " + formatDate(offer.date_taken + offer.maximal_duration) + " you will get liquidated soon" :
                     "Repay the loan!"
                   }
                 className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={
                   ((currentDate < new Date(1000 * Number(offer.date_taken + offer.minimal_duration))) ||
-                  (new Date(1000 * Number(offer.date_taken + offer.maximal_duration)) > currentDate))
+                  (new Date(1000 * Number(offer.date_taken + offer.maximal_duration)) < currentDate))
                 }
                 onClick={async (e) => {
                   action([offer.id, offer.token, computeInterest(Number(offer.amount), Number(offer.borrowing_rate), currentDate.getTime() / 1000 - Number(offer.date_taken))]);

@@ -243,8 +243,9 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           {["Make a Lend Offer", "Make a Borrow Offer"].map((tab) => (
             <button
             key={tab}
-            className={`text-base px-4 py-2 ${activeTab === tab ? "buttonselected" : "bg-base"} rounded`}
+            className={`text-base px-4 py-2 ${activeTab === tab ? "buttonselected" : "bg-base"} rounded disabled:bg-gray-300 disabled:text-white`}
             onClick={() => {setChoosenAsset(""); setActiveTab(tab)}}
+            disabled={tab === "Make a Borrow Offer"}
             >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
