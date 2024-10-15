@@ -12,11 +12,11 @@ const HeaderNoConnect = () => {
     <>
 
         <title>0LiqLend</title>
-        <meta name="description" content="0LiqLend is a lending app where you do NOT get liquidated. Instead, the protocol rebalance your positions at no cost when needed." />
+        <meta name="description" content="0LiqLend is p2p lending platform where sophisticated borrowers compete to offer the best yield for passive lenders." />
 
         {/* Open Graph metadata */}
         <meta property="og:title" content="0LiqLend" />
-        <meta property="og:description" content="0LiqLend is a lending app where you do NOT get liquidated. Instead, the protocol rebalance your positions at no cost when needed." />
+        <meta property="og:description" content="0LiqLend is p2p lending platform where sophisticated borrowers compete to offer the best yield for passive lenders." />
         <meta property="og:image" content="https://0LiqLend.com/image.png" />
         <meta property="og:url" content="https://0LiqLend.com" />
         <meta property="og:type" content="website" />
@@ -24,7 +24,7 @@ const HeaderNoConnect = () => {
         {/* Twitter Card metadata */}
         <meta name="twitter:card" content="https://0LiqLend.com/image.png" />
         <meta name="twitter:title" content="0LiqLend" />
-        <meta name="twitter:description" content="0LiqLend is a lending app where you do NOT get liquidated. Instead, the protocol rebalance your positions at no cost when needed." />
+        <meta name="twitter:description" content="0LiqLend is p2p lending platform where sophisticated borrowers compete to offer the best yield for passive lenders." />
         <meta name="twitter:image" content="https://0LiqLend.com/image.png" />
         <meta name="twitter:url" content="https://0LiqLend.com" />
 
