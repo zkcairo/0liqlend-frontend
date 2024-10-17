@@ -43,8 +43,6 @@ import { CONTRACT_ADDRESS, ETH_CATEGORY, PLATFORM_FEE_APY, USDC_CATEGORY } from 
 // De maniere generale, patch le code cairo, et faire un affichage different si on doit repay ou pas (si on est lender ou non)
 // toRepayAmount dans l'appel de repay_debt de l'ui
 
-// Add points to the cairo code
-
 
 
 
@@ -143,6 +141,7 @@ export default function OrderBookPage() {
             account={account}
             tokenUsed={market}
             category={currentCategory}
+            simplified={false}
           />
         )}
         {isTakeOrderModalOpen && (

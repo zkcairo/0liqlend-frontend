@@ -76,18 +76,28 @@ export default function Page() {
                   <h4 className="text-base font-medium">Total number of points: {Number(Number(totalpoints) / 10**16).toFixed(0)}</h4>
                 </div>
                 <div className="flex items-center gap-x-2">
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <h4 className="text-base font-medium">How to earn points: make loans as a lender or borrower.</h4>
-                </div>
-                <div className="flex items-center gap-x-2">
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <h4 className="text-base font-medium">Points roadmap: todo</h4>
+                  <h4 className="text-base font-medium">
+                    How to earn points: repay loans.<br/>
+                    When loans are repaid, the fee paid to the platform is added to your points.<br/>
+                    So just make loans.<br/>
+                    See <a href="https://docs.0liqlend.com/0liqlend/point-program" target="_blank"><u>this link</u></a> for more details.
+                  </h4>
                 </div>
                 <div className="flex items-center gap-x-2">
                   <h4 className="text-base font-medium">
-                    <a href="https://github.com/zkcairo/0liqlend-contract/blob/main/readme.md" target="_blank"><u>Disclaimer about the point programs</u></a>.
+                    If you want to be a sophisticated market maker, then pls dm.<br/>
+                    I'll help you, and give you a % of the $0liqlend tokens.<br/>
+                    It involves having always offers open within a given spread, and running bots.<br/>
+                    The spread will sufficiently large so you make money obviously.<br/>
+                    Ultimatly, the more market maker the better the platform, hence this offer.
+                  </h4>
+                </div>
+                <div className="flex items-center gap-x-2">
+                </div>
+                <div className="flex items-center gap-x-2">
+                  <h4 className="text-base font-medium">
+                    Obviously none of this is contractual to an airdrop, etc... <br/>
+                    Please see this: <a href="https://github.com/zkcairo/0liqlend-contract/blob/main/readme.md" target="_blank"><u>disclaimer about the point programs</u></a>.
                   </h4>
                 </div>
             </div>

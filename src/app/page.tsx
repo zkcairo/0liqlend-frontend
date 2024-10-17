@@ -75,7 +75,7 @@ export default function Home() {
         </ul>
       </div>
         <div className="text-center mt-5">
-          <button><a href="/app">Open the app</a></button>
+          <button><a href="/interface-pour-debile">Open the app</a></button>
         </div>
         <div className="mb-50 text-center mt-10">
           <button><a href="http://twitter.com/zkcairo" target="_blank">Follow me on twitter</a></button>

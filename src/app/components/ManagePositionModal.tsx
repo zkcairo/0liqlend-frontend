@@ -31,6 +31,7 @@ type Props = {
   account: any;
   tokenUsed: string;
   category: string;
+  simplified: boolean;
 };
 
 function scaleapy(n: number) {
@@ -38,7 +39,7 @@ function scaleapy(n: number) {
   return 100 - 100*Math.pow(((scale - n) / scale), 87600);
 }
 
-function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, category }: Props) {
+function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, category, simplified }: Props) {
 
   const userAddress = account.address;
 
@@ -48,7 +49,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     functionName: false,
     callData: true,
   });
-  const [activeTab, setActiveTab] = useState("lend offers");
+  const [activeTab, setActiveTab] = useState("current loans");
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -228,7 +229,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       </div>
       <h1 className="text-[24px] mb-2 font-semibold">All your offers/loans on {tokenUsed} market:</h1>
       <div className="flex justify-around mb-4 flex-wrap">
-        {["lend offers", "borrow offers", "current loans", "collaterals"].map((tab) => (
+        {(simplified ? ["current loans", "collaterals"] : ["lend offers", "borrow offers", "current loans", "collaterals"]).map((tab) => (
           <button
           key={tab}
           className={`text-base px-4 py-2 ${activeTab === tab ? "buttonselected" : "bg-base"} rounded`}

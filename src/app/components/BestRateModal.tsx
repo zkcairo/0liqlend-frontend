@@ -70,8 +70,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     amount: Number(inputAmount) * 10**18,
     price: {
       rate: valueYield * VALUE_1PERCENT_APY,
-      minimal_duration: minimalDuration * 3600,
-      maximal_duration: maximalDuration * 3600
+      minimal_duration: Math.round(minimalDuration * 3600) + 1,
+      maximal_duration: Math.round(maximalDuration * 3600) + 1
     }
   }
   const [list_of_offers_, obtainedYield] = activeTab === "Just lend" ? matchLend(chooseOffer, alloffers) : matchBorrow(chooseOffer, alloffers);

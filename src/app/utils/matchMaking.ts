@@ -11,15 +11,17 @@ export function matchLend(offer: any, all_offers: any[]) {
         // Check duration
         if (BigInt(Math.max(Number(all_borrow[i].price.minimal_duration), Number(offer.price.minimal_duration)))
             + BigInt(MIN_TIME_SPACING_FOR_OFFERS) <=
-            BigInt(Math.round(3600 * Math.min(Number(all_borrow[i].price.maximal_duration), Number(offer.price.maximal_duration))))) {
+            BigInt(Math.min(Number(all_borrow[i].price.maximal_duration), Number(offer.price.maximal_duration)))) {
                 // Compute the actual amount available based on max duration
-                let max_duration = BigInt(Math.round(Math.min(Number(all_borrow[i].price.maximal_duration), 3600 * Number(offer.price.maximal_duration)))).toString();
+                let max_duration = BigInt(Math.min(Number(all_borrow[i].price.maximal_duration), Number(offer.price.maximal_duration))).toString();
                 let amount_available = BigInt(all_borrow[i].amount_available);
                 console.log("amount_available    ", amount_available);
                 let new_amount_available_ = amount_available -
                 BigInt(Math.round((Number(amount_available) * Number(all_borrow[i].price.rate) * Number(max_duration)) /
                     (Number(SCALE_APY) * Number(SECONDS_PER_YEAR))).toString());
-                let new_amount_available = BigInt(Math.round(Number(new_amount_available_ - BigInt(1))));
+                // To be sure we don't take too much, we take off 1
+                let new_amount_available = new_amount_available_ - BigInt(1);
+
                 console.log("new_amount_available", new_amount_available);
                 const newborrow = Object.assign({}, all_borrow[i]);
                 newborrow.amount_available = new_amount_available;
