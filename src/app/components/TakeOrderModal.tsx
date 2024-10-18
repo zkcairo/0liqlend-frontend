@@ -35,7 +35,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     functionName: false,
     callData: true,
   });
-  const [activeTab, setActiveTab] = useState("All Lend Offers");
+  const [activeTab, setActiveTab] = useState("All Borrow Offers");
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [finalOpen, setFinalOpen] = useState(false);
@@ -49,8 +49,6 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
 
   const contractAddress = CONTRACT_ADDRESS;
 
-  console.log(tokenUsed);
-
   //ETH
   const { data: users_data, isLoading: users_loading } = useContractRead({
     address: contractAddress,
@@ -59,7 +57,11 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
     args: [category],
     watch: true,
   });
-  const all_offers = users_loading ? "..." : users_data;
+  const all_offers = users_loading ? [[], []] : users_data;
+
+  console.log("loz", all_offers, lend_or_borrow, id);
+  console.log("loz", (all_offers as any)[lend_or_borrow].filter((offer: any) => offer.id.toString() === id.toString()));
+  console.log("loz", id.toString());
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     setAnimate(false);
@@ -176,7 +178,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black"
+      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-[90vh]"
     >
       <div className="absolute right-5 top-4">
         <button
@@ -205,8 +207,9 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
         ["All Lend Offers", "All Borrow Offers"].map((tab) => (
           <button
             key={tab}
-            className={`text-base px-4 py-2 ${activeTab === tab ? "buttonselected" : "bg-base"} rounded`}
-            onClick={() => setActiveTab(tab)}
+            className={`text-base px-4 py-2 ${activeTab === tab ? "buttonselected" : "bg-base"} rounded disabled:bg-gray-300 disabled:text-white`}
+            onClick={() => {setActiveTab(tab); setLend_or_borrow(tab === "All Borrow Offers" ? 0 : 1)}}
+            disabled={tab === "All Lend Offers"}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
@@ -290,22 +293,22 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
 
         {activeTab === "All Lend Offers" && (
           <AllOffers
-            offers={(all_offers as any)[1]}
+            offers={(all_offers as any)[1].filter((offer: any) => offer.is_active)}
             loading={users_loading}
             type="lend"
             me={false}
             labelButton="Borrow"
-            action={(id: Number) => {setsetFinalOpen(id); setLend_or_borrow(1)}}
+            action={(id: Number) => {setsetFinalOpen(id)}}
           ></AllOffers>
         )}
         {activeTab === "All Borrow Offers" && (
           <AllOffers
-            offers={(all_offers as any)[0]}
+            offers={(all_offers as any)[0].filter((offer: any) => offer.is_active)}
             loading={users_loading}
             type="borrow"
             me={false}
             labelButton="Lend"
-            action={(id: Number) => {setsetFinalOpen(id); setLend_or_borrow(0)}}
+            action={(id: Number) => {setsetFinalOpen(id)}}
           ></AllOffers>
         )}
     </GenericModal>
@@ -315,7 +318,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           isOpen={finalOpen}
           onClose={() => setFinalOpen(false)}
           account={account}
-          offer={(all_offers as any)[lend_or_borrow][id]}
+          offer={(all_offers as any)[lend_or_borrow].filter((offer: any) => offer.id.toString() === id.toString())[0]}
           isLend={activeTab === "All Lend Offers"}
           />
       }

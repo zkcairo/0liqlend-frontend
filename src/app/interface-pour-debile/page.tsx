@@ -25,14 +25,8 @@ export default function OrderBookPage() {
   const { account, status, isConnected } = useAccount();
 
   const [market, setMarket] = useState("USDC");
-  const [duration, setDuration] = useState("1 Week");
-  const [advancedSelection, setAdvancedSelection] = useState(false);
-  const [minimalDuration, setMinimalDuration] = useState(7*24);
-  const [maximalDuration, setMaximalDuration] = useState(7*24);
 
   const [isManagePositionModalOpen, setIsManagePositionModalOpen] = useState(false);
-  const [isTakeOrderModalOpen, setIsTakeOrderModalOpen] = useState(false);
-  const [isMakeOrderModalOpen, setIsMakeOrderModalOpen] = useState(false);
   const [bestRateModalOpen, setBestRateModalOpen] = useState(false);
 
   const currentCategory = market === "USDC" ? USDC_CATEGORY : ETH_CATEGORY;

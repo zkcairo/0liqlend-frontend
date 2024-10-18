@@ -196,7 +196,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-svh"
+      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-[90vh]"
     >
       <div className="absolute right-5 top-4">
         <button
@@ -237,12 +237,12 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
           <h2>Max you can {isLend ? "borrow" : "lend"} with this offer</h2>
           </div>
           <div className="flex flex-col justify-center">
-          <h2>{Number(offer.amount_available) / 10**18} <DisplayToken address={offer.token}/></h2>
+          <h2>{Number(offer.amount_available) / 10**18} {isLend ? <DisplayToken address={offer.token}/> : "$"}</h2>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-5">
           <div className="flex flex-col justify-center">
-          <h2>Amount you want to {isLend ? "borrow" : "lend"} in <DisplayToken address={offer.token}/></h2>
+          <h2>Amount you want to {isLend ? "borrow" : "lend"} in {isLend ? <DisplayToken address={offer.token}/> : "$"}</h2>
           </div>
           <div className="flex flex-col justify-center">
           <input
@@ -324,7 +324,7 @@ function TakeOrderModalFinal({ isOpen, onClose, account, offer, isLend }: Props)
 
         <ChooseAsset
           type={isLend ? "borrow" : "lend"}
-          baseAsset={(isOpen && prettyNameFromAddress(offer.token.toString(16))) as any}
+          baseAsset={isOpen && ((isLend ? prettyNameFromAddress(offer.token.toString(16)) : prettyNameFromAddress(offer.token_collateral.toString(16))) as any)}
           address={(account.address as any)}
           above_choosenAsset={choosenAsset}
           set_above_choosenAsset={setChoosenAsset}

@@ -204,7 +204,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-svh"
+      className="w-[90vw] mx-auto md:h-fit md:w-[45rem] text-white py-4 px-5 relative bg-black max-h-[90vh]"
     >
       <div className="absolute right-5 top-">
         <button
@@ -240,16 +240,40 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
         ))}
       </div>
 
-      {((activeTab === "lend offers") || (activeTab === "borrow offers")) && (
+      {/* LEND */}
+      {activeTab === "lend offers" && (
+        <>
+        <h1>
+          <center>
+          "Available amount" is how much one offer can pick from your wallet to make a loan.<br/>
+          Please disable the offers you don't want to use anymore.<br/>
+          </center>
+        </h1>
+        <hr/>
+        <AllOffers
+          offers={offers as any[]}
+          loading={loading_offers}
+          type="lend"
+          me={true}
+          labelButton={"Disable"}
+          action={handleExecute}
+          ></AllOffers>
+        </>
+      )}
+
+      {/* BORROW */}
+      {((activeTab === "borrow offers")) && (
           <AllOffers
           offers={offers as any[]}
           loading={loading_offers}
-          type={activeTab === "lend offers" ? "lend" : "borrow"}
+          type="borrow"
           me={true}
           labelButton={"Disable"}
           action={handleExecute}
           ></AllOffers>
       )}
+
+      {/* LOANS */}
       {activeTab === "current loans" && (
         <>
         <h1><center>Current date: {currentTime()}</center></h1>
@@ -264,6 +288,8 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           ></AllOffers>
         </>
       )}
+
+      {/* COLLATERALS */}
       {activeTab === "collaterals" && (
           <AllOffers
           offers={offers as any[]}

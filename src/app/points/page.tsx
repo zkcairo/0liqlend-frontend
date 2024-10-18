@@ -104,7 +104,7 @@ export default function Page() {
           </div>
         </form>
         <div className="text-center">
-          <button><a href="/app">Open the app</a></button>
+          <button><a href="/interface-pour-debile">Open the app</a></button>
         </div>
       <Bottom />
       </div>

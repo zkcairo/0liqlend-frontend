@@ -30,8 +30,9 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
             <h2>Offer {1 + index} (id {offer.id.toString()}):</h2>
             {(type === "lend" && (<h3>Offer asset: <DisplayToken address={offer.token}/></h3>))
             || (type === "borrow" && (<h3>Collateral: <DisplayCollateral offer={offer} me={me}/></h3>))}
-            <h3>Available amount: {formatCurrency(Number(offer.total_amount))}$</h3>
-            {me ? <h3>Loaned amount: {formatCurrency(Number(offer.total_amount - offer.amount_available))}$</h3> : <></>}
+            {me ? <><h3>Total offer size: {formatCurrency(Number(offer.total_amount))}$</h3></> : <></>}
+            <h3>Available amount: {formatCurrency(Number(offer.amount_available))}$</h3>
+            {/* {me ? <h3>Loaned amount: {formatCurrency(Number(offer.total_amount - offer.amount_available))}$</h3> : <></>} */}
             <h3>
               {!me ?
                 type === "lend" ? "Yield you pay" : "Yield you get"
@@ -39,7 +40,7 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
             <h3>Min/Max duration: {formatTime(Number(offer.price.minimal_duration)/3600)} - {formatTime(Number(offer.price.maximal_duration)/3600)}</h3>
             <div className="grid grid-cols-3 gap-3">
               <button
-                title={`To prevent further action with this offer, disable it.`}
+                title={me ? "To prevent further action with this offer, disable it." : "To "+(type==="lend"?"borrow from":"lend to")+" this offer, click the button."}
                 className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 onClick={async (e) => {
                   action(offer.id);

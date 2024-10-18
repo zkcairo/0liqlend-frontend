@@ -25,6 +25,7 @@ import { CONTRACT_ADDRESS, ETH_CATEGORY, PLATFORM_FEE_APY, USDC_CATEGORY } from 
 // Dans bestrate quand on match pour trouver les meilleurs offres, faire l'inverse de compute_max_interest pour savoir combien on peut prendre sur l'offre
 // Les borrowing amount affichés sur le front sont pas les bons, ça a été patch dans le code cairo mais pas deployé
 
+// Todo, dans la liste des offers que je peux take, filtrer les offers trop basses typiquement à 0$
 
 
 
