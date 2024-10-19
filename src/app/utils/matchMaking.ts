@@ -7,6 +7,9 @@ export function matchLend(offer: any, all_offers: any[]) {
     let answer = [];
     let average_rate = BigInt(0);
     for (let i = 0; i < all_borrow.length; i++) {
+        if (Number(all_borrow[i].amount_available) < 10**18) {
+            continue
+        }
         console.log("Current amount      ", amount);
         // Check duration
         if (BigInt(Math.max(Number(all_borrow[i].price.minimal_duration), Number(offer.price.minimal_duration)))

@@ -111,6 +111,12 @@ const AllOffers = ({ offers, loading, type, me, labelButton, action }: Props) =>
                 title={"Liquidation will happen automatically, you do not need to monitor for it"}
                 className="mt-1 rounded py-1 px-12 flex items-center justify-center disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={true}
+                // Todo, add the liquidation
+                // {currentDate < new Date(1000 * Number(offer.date_taken + offer.maximal_duration))}
+                onClick={async (e) => {
+                  action(offer.id);
+                  e.preventDefault();
+                }}
               >
                 Liquidate
               </button>

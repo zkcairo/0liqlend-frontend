@@ -195,6 +195,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
 
 
         // Make offer
+
         let calldata: Array<any>[] = [];
         // Token & amount
         if (activeTab === "Just lend") {
@@ -234,6 +235,13 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
           contractAddress: contractAddress,
           calldata: ((activeTab === "Just lend") ? [Number(myid)+i, current_offer.id, amount, 0] : [current_offer.id, Number(myid)+i, amount, 0]).map((value) => String(value)),
           entrypoint: "match_offer"
+        })
+
+        // Disable previous lending/borrowing offer
+        call.push({
+          contractAddress: contractAddress,
+          calldata: [Number(myid)+i].map((value) => String(value)),
+          entrypoint: (activeTab === "Just lend") ? "disable_lending_offer" : "disable_borrowing_offer"
         })
       }
 

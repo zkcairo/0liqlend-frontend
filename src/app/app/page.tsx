@@ -28,6 +28,14 @@ import { CONTRACT_ADDRESS, ETH_CATEGORY, PLATFORM_FEE_APY, USDC_CATEGORY } from 
 // Todo, dans la liste des offers que je peux take, filtrer les offers trop basses typiquement à 0$
 
 
+// https://cryptoyieldcurve.io
+
+// Todo, quand on market lend l'allowance est mal faite
+// Mais je peux faire increase_allowance, wtf
+
+// Todo, virer dai0?
+
+
 
 
 // Todo, dans les trucs que je peux mettre en collateral, mettre que ceux supporté par le protocol atm
