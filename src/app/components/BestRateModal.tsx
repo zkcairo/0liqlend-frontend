@@ -30,7 +30,7 @@ function MyContractExecutionModal({ isOpen, onClose, account, tokenUsed, categor
   
   const [valueYield, setValueYield] = useState<number>(10);
   const [minimalDuration, setMinimalDuration] = useState<number>(1);
-  const [maximalDuration, setMaximalDuration] = useState<number>(168);
+  const [maximalDuration, setMaximalDuration] = useState<number>(520);
   const [inputAmount, setInputAmount] = useState<string>("");
   const [activeTab, setActiveTab] = useState("Just lend");
 
