@@ -31,8 +31,8 @@ export function StarknetProvider({ children }: StarknetProviderProps) {
     new ArgentMobileConnector(),
   ];
 
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY!;
-  const nodeProvider = process.env.NEXT_PUBLIC_PROVIDER!;
+  const apiKey = "01f4e134ab4d40e18c303b3be714335c";
+  const nodeProvider = "infura";
 
   let provider;
   if (nodeProvider == "infura") {
